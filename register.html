@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ Lanka - Register</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="registerstyles.css">
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="container">
+
+    <header>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="logo">
+            <div>
+                <h1>ResQ Lanka</h1>
+                <p>Disaster & Crisis Management System</p>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button class="fuel">
+                <i class="fa-solid fa-gas-pump"></i>
+                <div>
+                    <span>CHECK FUEL</span>
+                    <span>AVAILABILITY</span>
+                </div>
+            </button>
+
+            <button class="danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
+                    <span>INFORM ABOUT</span>
+                    <span>DISASTER!</span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="register-card">
+            <div class="welcome-icon">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+            <h2>
+                CREATE YOUR
+                <br>
+                RESQ LANKA ACCOUNT
+            </h2>
+
+            <div class="divider"></div>
+            
+            <form>
+                <div class="form-grid">
+
+                    <div class="field full">
+                        <label>Full Name</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text"
+                            placeholder="Enter your full name">
+
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Date of Birth</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <input type="date">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Gender</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-venus-mars"></i>
+                            <select>
+                                <option>Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Email Address</label>
+                        <div class="input-box">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email"
+                            placeholder="example@email.com">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Contact Number</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" placeholder="+94 77 1234567">
+                        </div>
+                    </div>
+
+                    <div class="field full">
+                        <label>Home Address</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <input type="text" placeholder="Enter your home address">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>District</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <select>
+                                <option>Select District</option>
+                                <option>Colombo</option>
+                                <option>Gampaha</option>
+                                <option>Kalutara</option>
+                                <option>Kandy</option>
+                                <option>Galle</option>
+                                <option>Matara</option>
+                                <option>Kurunegala</option>
+                                <option>Anuradhapura</option>
+                                <option>Jaffna</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Occupation</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <input type="text" placeholder="Student / Engineer / Teacher">
+                        </div>
+                    </div>
+
+                    <div class="field full">
+                        <label>NIC Number</label>
+                        <div class="input-box">
+                            <i class="fa-regular fa-id-card"></i>
+                            <input type="text" placeholder="Enter NIC Number">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" placeholder="Create password">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Confirm Password</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" placeholder="Confirm password">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Emergency Contact Name</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <input type="text"
+                            placeholder="Emergency Contact">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Emergency Contact Number</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-phone-volume"></i>
+                            <input type="tel" placeholder="+94 71 1234567">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terms">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">
+                        I agree to the
+                        <a href="#">Terms & Conditions</a>
+                        and
+                        <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button class="register-btn-main">
+                    <i class="fa-solid fa-user-plus"></i>
+                    CREATE ACCOUNT
+                </button>
+
+                <p class="login-link">
+                    Already have an account?
+                    <a href="login.html">Sign In</a>
+                </p>
+
+            </form>
+
+        </section>
+
+        <!-- ================= RIGHT PANEL ================= -->
+
+        <section class="assignment-card">
+            <h2>WHY JOIN RESQ LANKA?</h2>
+
+            <div class="assignment">
+                <div class="number blue">1</div>
+                <div class="icon blue-bg">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+
+                <div class="content">
+                    <h3>
+                        VOLUNTEER DURING
+                        <br>
+                        EMERGENCIES
+                    </h3>
+                    <p>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Participate in rescue and disaster relief missions.
+                    </p>
+                </div>
+
+                <div class="status">
+                    OPEN
+                </div>
+            </div>
+
+            <div class="assignment">
+                <div class="number red">2</div>
+                <div class="icon red-bg">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+
+                <div class="content">
+                    <h3>
+                        DONATE RELIEF
+                        <br>
+                        SUPPLIES
+                    </h3>
+
+                    <p>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Help communities with food, medicine and essentials.
+                    </p>
+                </div>
+
+                <div class="status">
+                    ACTIVE
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="shield">
+                    <i class="fa-solid fa-shield"></i>
+                </div>
+
+                <div>
+                    <h3>Together We Save Lives</h3>
+                    <p>
+                        Register today and become a trusted member of Sri Lanka's disaster response network.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+        
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+
+            <i class="fa-solid fa-shield"></i>
+
+            Building safer communities through preparedness,
+            response and resilience.
+
+        </div>
+
+        <div>
+
+            © 2026 ResQ Lanka. All rights reserved.
+
+        </div>
+
+    </footer>
+
+</div>
+
+</body>
+</html>
