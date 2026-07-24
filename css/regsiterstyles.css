@@ -130,10 +130,7 @@ main{
     align-items:start;
 }
 
-/*=================================
-CARDS
-=================================*/
-
+/*CARDS*/
 .register-card,
 .assignment-card{
     background:#fff;
