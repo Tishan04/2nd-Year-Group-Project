@@ -119,10 +119,7 @@ header{
     background:#e31717;
 }
 
-/*=================================
-MAIN
-=================================*/
-
+/*MAIN*/
 main{
     display:grid;
     grid-template-columns:720px 1fr;
