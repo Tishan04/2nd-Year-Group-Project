@@ -1,0 +1,15 @@
+config (Database connection)
+
+models (Database Layer)
+
+controllers (Business Logic Layer)
+
+views (Presentation Layer)
+
+css
+
+js
+
+uploads (images)
+
+database
