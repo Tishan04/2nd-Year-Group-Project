@@ -34,7 +34,7 @@
                     <span>CHECK FUEL</span>
                     <span>AVAILABILITY</span>
                 </div>
-            </button>
+            </a>
 
             <a href="../disaster/report_disaster.php" class="danger">
                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -42,7 +42,7 @@
                     <span>INFORM ABOUT</span>
                     <span>DISASTER!</span>
                 </div>
-            </button>
+            </a>
         </div>
 
     </header>
