@@ -63,10 +63,15 @@
             <div class="divider"></div>
 
             <form action="../../controllers/AuthController.php" method="POST">
-                <label>Email</label>
+                <label>Username</label>
                 <div class="input-box">
                     <i class="fa-regular fa-envelope"></i>
-                    <input type="email" placeholder="Enter your email">
+                    <input
+    type="text"
+    name="username"
+    placeholder="Enter your username"
+    required
+>
                 </div>
 
                 <label>Password</label>
