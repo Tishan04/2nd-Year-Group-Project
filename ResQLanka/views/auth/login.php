@@ -72,7 +72,12 @@
                 <label>Password</label>
                 <div class="input-box">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Enter your password">
+                    <input
+    type="password"
+    name="password"
+    placeholder="Enter your password"
+    required
+>
                     <i class="fa-regular fa-eye"></i>
                 </div>
 
