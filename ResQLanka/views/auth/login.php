@@ -66,12 +66,7 @@
                 <label>Username</label>
                 <div class="input-box">
                     <i class="fa-regular fa-envelope"></i>
-                    <input
-    type="text"
-    name="username"
-    placeholder="Enter your username"
-    required
->
+                    <input type="text" name="username" placeholder="Enter your username" required>
                 </div>
 
                 <label>Password</label>
