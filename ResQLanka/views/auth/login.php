@@ -76,7 +76,7 @@
                     <i class="fa-regular fa-eye"></i>
                 </div>
 
-                <button class="signin">
+                <button type="submit" class="signin">
                     <i class="fa-solid fa-lock"></i>
                     SIGN IN
                 </button>
