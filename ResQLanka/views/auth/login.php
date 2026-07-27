@@ -62,7 +62,7 @@
             </h2>
             <div class="divider"></div>
 
-            <form>
+            <form action="../../controllers/AuthController.php" method="POST">
                 <label>Email</label>
                 <div class="input-box">
                     <i class="fa-regular fa-envelope"></i>
