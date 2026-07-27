@@ -28,7 +28,7 @@
         </div>
 
         <div class="header-buttons">
-            <button class="fuel">
+            <a href="../fuel/search.php" class="fuel">
                 <i class="fa-solid fa-gas-pump"></i>
                 <div>
                     <span>CHECK FUEL</span>
