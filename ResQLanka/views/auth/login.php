@@ -36,7 +36,7 @@
                 </div>
             </button>
 
-            <button class="danger">
+            <a href="../disaster/report_disaster.php" class="danger">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div>
                     <span>INFORM ABOUT</span>
