@@ -98,7 +98,7 @@
                     </div>
                 </div>
 
-                <button class="register-btn">
+                <a href="register.php" class="register-btn">
                     REGISTER
                 </button>
             </div>
