@@ -67,6 +67,10 @@ require_once("../../config/session.php");
             <div class="divider"></div>
 
             <form action="../../controllers/AuthController.php" method="POST">
+                <?php
+                    if(isset($_GET["error"])){echo "<p style='color:red;'>Invalid Username or Password</p>";}
+                ?>
+                
                 <label>Username</label>
                 <div class="input-box">
                     <i class="fa-regular fa-envelope"></i>
