@@ -108,7 +108,7 @@ require_once("../../config/session.php");
 
                 <a href="register.php" class="register-btn">
                     REGISTER
-                </button>
+                </a>
             </div>
         </section>
 
