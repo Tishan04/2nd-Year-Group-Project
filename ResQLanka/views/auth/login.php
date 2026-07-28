@@ -217,7 +217,7 @@ require_once("../../config/session.php");
         </div>
 
         <div>
-            © 2026 Res@ Lanka. All rights reserved.
+            © 2026 ResQ Lanka. All rights reserved.
         </div>
 
     </footer>
