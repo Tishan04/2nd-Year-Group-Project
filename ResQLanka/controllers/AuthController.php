@@ -1,42 +1,58 @@
 <?php
 
-require_once("../config/database.php");
-require_once("../config/session.php");
-require_once("../models/User.php");
+session_start();
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
+require_once "../models/User.php";
+
+$user = new User();
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
 
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
 
-    $userModel = new User($conn);
+    $loggedUser = $user->login($username);
 
-    $user = $userModel->login($username);
+    if($loggedUser)
+    {
 
-    if($user){
+        if(password_verify($password,$loggedUser["password"]))
+        {
 
-        if(password_verify($password,$user["password"])){
+            $_SESSION["user_id"] = $loggedUser["user_id"];
 
-            $_SESSION["user_id"] = $user["user_id"];
-            $_SESSION["username"] = $user["username"];
-            $_SESSION["role"] = $user["role"];
+            $_SESSION["username"] = $loggedUser["username"];
 
-            if($user["role"]=="SUPER_ADMIN"){
+            $_SESSION["role"] = $loggedUser["role"];
 
-                header("Location: ../views/dashboard/super_dashboard.php");
+            $_SESSION["name"] =
+            $loggedUser["first_name"]." ".
+            $loggedUser["last_name"];
 
+            $_SESSION["district"] =
+            $loggedUser["district"];
+
+            $_SESSION["tier"] =
+            $loggedUser["tier"];
+
+            $_SESSION["points"] =
+            $loggedUser["points"];
+
+
+            if($loggedUser["role"]=="super_admin")
+            {
+                header("Location: ../views/superadmin/dashboard.php");
             }
 
-            elseif($user["role"]=="DISTRICT_ADMIN"){
-
-                header("Location: ../views/dashboard/district_dashboard.php");
-
+            elseif($loggedUser["role"]=="district_admin")
+            {
+                header("Location: ../views/admin/dashboard.php");
             }
 
-            else{
-
-                header("Location: ../views/dashboard/user_dashboard.php");
-
+            else
+            {
+                header("Location: ../views/user/dashboard.php");
             }
 
             exit();
@@ -46,5 +62,4 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
 
     header("Location: ../views/auth/login.php?error=1");
-
 }
