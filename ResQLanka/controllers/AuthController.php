@@ -21,24 +21,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         {
 
             $_SESSION["user_id"] = $loggedUser["user_id"];
-
             $_SESSION["username"] = $loggedUser["username"];
-
             $_SESSION["role"] = $loggedUser["role"];
-
             $_SESSION["name"] =
             $loggedUser["first_name"]." ".
             $loggedUser["last_name"];
-
             $_SESSION["district"] =
             $loggedUser["district"];
-
             $_SESSION["tier"] =
             $loggedUser["tier"];
-
             $_SESSION["points"] =
             $loggedUser["points"];
-
 
             if($loggedUser["role"]=="super_admin")
             {
@@ -56,9 +49,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
             }
 
             exit();
-
         }
-
     }
 
     header("Location: ../views/auth/login.php?error=1");
