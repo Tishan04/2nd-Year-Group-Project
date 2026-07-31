@@ -8,7 +8,6 @@ class Database
     private $password = "";
 
     public $conn;
-
     public function connect()
     {
         $this->conn = null;
