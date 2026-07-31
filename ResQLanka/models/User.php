@@ -21,14 +21,9 @@ class User
 
     public function login($username)
     {
-        $query = "SELECT * FROM users
-                  WHERE username = :username
-                  LIMIT 1";
-
+        $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
-
         $stmt->bindParam(":username",$username);
-
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -42,14 +37,9 @@ class User
 
     public function usernameExists($username)
     {
-        $query = "SELECT user_id
-                  FROM users
-                  WHERE username=:username";
-
+        $query = "SELECT user_id FROM users WHERE username=:username";
         $stmt = $this->conn->prepare($query);
-
         $stmt->bindParam(":username",$username);
-
         $stmt->execute();
 
         return $stmt->rowCount()>0;
@@ -63,14 +53,9 @@ class User
 
     public function emailExists($email)
     {
-        $query = "SELECT user_id
-                  FROM users
-                  WHERE email=:email";
-
+        $query = "SELECT user_id FROM users WHERE email=:email";
         $stmt = $this->conn->prepare($query);
-
         $stmt->bindParam(":email",$email);
-
         $stmt->execute();
 
         return $stmt->rowCount()>0;
@@ -85,7 +70,6 @@ class User
     public function register($data)
     {
         $query = "INSERT INTO users(
-
                     first_name,
                     last_name,
                     username,
@@ -97,11 +81,9 @@ class User
                     role,
                     tier,
                     points
-
                 )
 
                 VALUES(
-
                     :first_name,
                     :last_name,
                     :username,
@@ -113,11 +95,9 @@ class User
                     'registered_user',
                     'Bronze',
                     0
-
                 )";
 
         $stmt = $this->conn->prepare($query);
-
         return $stmt->execute($data);
     }
 
