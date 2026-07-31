@@ -1,6 +1,6 @@
 <?php
 
-require_once "../config/Database.php";
+require_once __DIR__ . "/../config/Database.php";
 
 class User
 {
@@ -13,93 +13,145 @@ class User
         $this->conn = $database->connect();
     }
 
-    /*
-    ---------------------------------
-    LOGIN
-    ---------------------------------
-    */
-
-    public function login($username)
+    public function login($identifier)
     {
-        $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
+        $query = "
+            SELECT *
+            FROM {$this->table}
+            WHERE username = :identifier
+               OR email = :identifier
+            LIMIT 1
+        ";
+
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":username",$username);
-        $stmt->execute();
+
+        $stmt->execute([
+            "identifier" => $identifier
+        ]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /*
-    ---------------------------------
-    CHECK USERNAME
-    ---------------------------------
-    */
-
     public function usernameExists($username)
     {
-        $query = "SELECT user_id FROM users WHERE username=:username";
+        $query = "
+            SELECT user_id
+            FROM {$this->table}
+            WHERE username = :username
+            LIMIT 1
+        ";
+
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":username",$username);
-        $stmt->execute();
 
-        return $stmt->rowCount()>0;
+        $stmt->execute([
+            "username" => $username
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
     }
-
-    /*
-    ---------------------------------
-    CHECK EMAIL
-    ---------------------------------
-    */
 
     public function emailExists($email)
     {
-        $query = "SELECT user_id FROM users WHERE email=:email";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":email",$email);
-        $stmt->execute();
+        $query = "
+            SELECT user_id
+            FROM {$this->table}
+            WHERE email = :email
+            LIMIT 1
+        ";
 
-        return $stmt->rowCount()>0;
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute([
+            "email" => $email
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
     }
 
-    /*
-    ---------------------------------
-    REGISTER USER
-    ---------------------------------
-    */
+    public function nicExists($nic)
+    {
+        $query = "
+            SELECT user_id
+            FROM {$this->table}
+            WHERE nic = :nic
+            LIMIT 1
+        ";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute([
+            "nic" => $nic
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+    }
 
     public function register($data)
     {
-        $query = "INSERT INTO users(
-                    first_name,
-                    last_name,
-                    username,
-                    email,
-                    password,
-                    phone,
-                    address,
-                    district,
-                    role,
-                    tier,
-                    points
-                )
-
-                VALUES(
-                    :first_name,
-                    :last_name,
-                    :username,
-                    :email,
-                    :password,
-                    :phone,
-                    :address,
-                    :district,
-                    'registered_user',
-                    'Bronze',
-                    0
-                )";
+        $query = "
+            INSERT INTO {$this->table}
+            (
+                first_name,
+                last_name,
+                date_of_birth,
+                gender,
+                username,
+                email,
+                password,
+                phone,
+                address,
+                district,
+                occupation,
+                nic,
+                emergency_contact_name,
+                emergency_contact_phone,
+                role,
+                tier,
+                points,
+                status
+            )
+            VALUES
+            (
+                :first_name,
+                :last_name,
+                :date_of_birth,
+                :gender,
+                :username,
+                :email,
+                :password,
+                :phone,
+                :address,
+                :district,
+                :occupation,
+                :nic,
+                :emergency_contact_name,
+                :emergency_contact_phone,
+                'registered_user',
+                'Bronze',
+                0,
+                'active'
+            )
+        ";
 
         $stmt = $this->conn->prepare($query);
-        return $stmt->execute($data);
-    }
 
+        return $stmt->execute([
+            "first_name" => $data["first_name"],
+            "last_name" => $data["last_name"],
+            "date_of_birth" => $data["date_of_birth"],
+            "gender" => $data["gender"],
+            "username" => $data["username"],
+            "email" => $data["email"],
+            "password" => $data["password"],
+            "phone" => $data["phone"],
+            "address" => $data["address"],
+            "district" => $data["district"],
+            "occupation" => $data["occupation"],
+            "nic" => $data["nic"],
+            "emergency_contact_name" =>
+                $data["emergency_contact_name"],
+            "emergency_contact_phone" =>
+                $data["emergency_contact_phone"]
+        ]);
+    }
 }
-?>
