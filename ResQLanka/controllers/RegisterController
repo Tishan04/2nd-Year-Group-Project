@@ -1,1 +1,42 @@
+<?php
 
+require_once "../models/User.php";
+
+$user = new User();
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+
+    if($user->usernameExists($_POST["username"]))
+    {
+        die("Username already exists.");
+    }
+
+    if($user->emailExists($_POST["email"]))
+    {
+        die("Email already exists.");
+    }
+
+    $data = [
+        "first_name" => $_POST["first_name"],
+        "last_name" => $_POST["last_name"],
+        "username" => $_POST["username"],
+        "email" => $_POST["email"],
+        "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
+        "phone" => $_POST["phone"],
+        "address" => $_POST["address"],
+        "district" => $_POST["district"]
+
+    ];
+
+    if($user->register($data))
+    {
+        header("Location: ../views/auth/login.php?registered=1");
+    }
+
+    else
+    {
+        echo "Registration Failed.";
+    }
+}
+?>
