@@ -8,30 +8,37 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
-$firstName = trim($_POST["first_name"] ?? "");
-$lastName = trim($_POST["last_name"] ?? "");
-$username = trim($_POST["username"] ?? "");
-$email = trim($_POST["email"] ?? "");
+$fullName = trim($_POST["full_name"] ?? "");
+$dateOfBirth = trim($_POST["date_of_birth"] ?? "");
+$gender = trim($_POST["gender"] ?? "");
+$email = strtolower(trim($_POST["email"] ?? ""));
 $phone = trim($_POST["phone"] ?? "");
 $address = trim($_POST["address"] ?? "");
 $district = trim($_POST["district"] ?? "");
+$occupation = trim($_POST["occupation"] ?? "");
+$nic = strtoupper(trim($_POST["nic"] ?? ""));
 $password = $_POST["password"] ?? "";
 $confirmPassword = $_POST["confirm_password"] ?? "";
+$emergencyContactName =
+    trim($_POST["emergency_contact_name"] ?? "");
+$emergencyContactPhone =
+    trim($_POST["emergency_contact_phone"] ?? "");
+$termsAccepted = isset($_POST["terms"]);
 
 $errors = [];
 
-if ($firstName === "") {
-    $errors[] = "First name is required.";
+if ($fullName === "") {
+    $errors[] = "Full name is required.";
 }
 
-if ($lastName === "") {
-    $errors[] = "Last name is required.";
+if ($dateOfBirth === "") {
+    $errors[] = "Date of birth is required.";
+} elseif ($dateOfBirth > date("Y-m-d")) {
+    $errors[] = "Date of birth cannot be a future date.";
 }
 
-if ($username === "") {
-    $errors[] = "Username is required.";
-} elseif (!preg_match("/^[A-Za-z0-9_]{4,30}$/", $username)) {
-    $errors[] = "Username must contain 4 to 30 letters, numbers, or underscores.";
+if (!in_array($gender, ["Male", "Female"], true)) {
+    $errors[] = "Please select your gender.";
 }
 
 if ($email === "") {
@@ -47,83 +54,147 @@ if ($phone === "") {
 }
 
 if ($address === "") {
-    $errors[] = "Address is required.";
+    $errors[] = "Home address is required.";
 }
 
 if ($district === "") {
     $errors[] = "Please select your district.";
 }
 
-if ($password === "") {
-    $errors[] = "Password is required.";
-} elseif (strlen($password) < 8) {
+if ($occupation === "") {
+    $errors[] = "Occupation is required.";
+}
+
+if ($nic === "") {
+    $errors[] = "NIC number is required.";
+} elseif (!preg_match(
+    "/^([0-9]{9}[VXvx]|[0-9]{12})$/",
+    $nic
+)) {
+    $errors[] = "Enter a valid NIC number.";
+}
+
+if (strlen($password) < 8) {
     $errors[] = "Password must contain at least 8 characters.";
 }
 
-if ($confirmPassword === "") {
-    $errors[] = "Please confirm your password.";
-} elseif ($password !== $confirmPassword) {
+if ($password !== $confirmPassword) {
     $errors[] = "Passwords do not match.";
+}
+
+if ($emergencyContactName === "") {
+    $errors[] = "Emergency contact name is required.";
+}
+
+if ($emergencyContactPhone === "") {
+    $errors[] = "Emergency contact number is required.";
+} elseif (!preg_match(
+    "/^[0-9+\-\s]{9,20}$/",
+    $emergencyContactPhone
+)) {
+    $errors[] = "Enter a valid emergency contact number.";
+}
+
+if (!$termsAccepted) {
+    $errors[] = "You must accept the terms and conditions.";
 }
 
 $userModel = new User();
 
-if ($username !== "" && $userModel->usernameExists($username)) {
-    $errors[] = "This username is already in use.";
-}
+/*
+The registration page does not contain a separate username field.
+Therefore, the email is used as the username.
+
+The login model accepts either a username or an email.
+*/
+$username = $email;
 
 if ($email !== "" && $userModel->emailExists($email)) {
     $errors[] = "This email address is already registered.";
 }
 
+if ($nic !== "" && $userModel->nicExists($nic)) {
+    $errors[] = "This NIC number is already registered.";
+}
+
+$oldValues = [
+    "full_name" => $fullName,
+    "date_of_birth" => $dateOfBirth,
+    "gender" => $gender,
+    "email" => $email,
+    "phone" => $phone,
+    "address" => $address,
+    "district" => $district,
+    "occupation" => $occupation,
+    "nic" => $nic,
+    "emergency_contact_name" => $emergencyContactName,
+    "emergency_contact_phone" => $emergencyContactPhone,
+    "terms" => $termsAccepted ? "1" : ""
+];
+
 if (!empty($errors)) {
     $_SESSION["register_errors"] = $errors;
-
-    $_SESSION["register_old"] = [
-        "first_name" => $firstName,
-        "last_name" => $lastName,
-        "username" => $username,
-        "email" => $email,
-        "phone" => $phone,
-        "address" => $address,
-        "district" => $district
-    ];
+    $_SESSION["register_old"] = $oldValues;
 
     header("Location: ../views/auth/register.php");
     exit();
 }
 
+/*
+Split the full name into first name and last name
+because the users table stores them separately.
+*/
+$nameParts = preg_split(
+    "/\s+/",
+    $fullName,
+    2
+);
+
+$firstName = $nameParts[0];
+$lastName = $nameParts[1] ?? "";
+
 $userData = [
     "first_name" => $firstName,
     "last_name" => $lastName,
+    "date_of_birth" => $dateOfBirth,
+    "gender" => $gender,
     "username" => $username,
     "email" => $email,
-    "password" => password_hash($password, PASSWORD_DEFAULT),
+    "password" => password_hash(
+        $password,
+        PASSWORD_DEFAULT
+    ),
     "phone" => $phone,
     "address" => $address,
-    "district" => $district
+    "district" => $district,
+    "occupation" => $occupation,
+    "nic" => $nic,
+    "emergency_contact_name" => $emergencyContactName,
+    "emergency_contact_phone" => $emergencyContactPhone
 ];
 
 try {
     if ($userModel->register($userData)) {
-        unset($_SESSION["register_old"]);
         unset($_SESSION["register_errors"]);
+        unset($_SESSION["register_old"]);
 
         $_SESSION["login_success"] =
-            "Registration successful. You can now sign in.";
+            "Registration successful. Use your email address to sign in.";
 
         header("Location: ../views/auth/login.php");
         exit();
     }
 
     $_SESSION["register_errors"] = [
-        "Registration could not be completed. Please try again."
+        "Registration failed. Please try again."
     ];
 } catch (PDOException $exception) {
     $_SESSION["register_errors"] = [
         "A database error occurred while creating your account."
     ];
 }
+
+$_SESSION["register_old"] = $oldValues;
 
 header("Location: ../views/auth/register.php");
 exit();
