@@ -1,42 +1,129 @@
 <?php
 
-require_once "../models/User.php";
+require_once __DIR__ . "/../config/session.php";
+require_once __DIR__ . "/../models/User.php";
 
-$user = new User();
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    header("Location: ../views/auth/register.php");
+    exit();
+}
 
-if($_SERVER["REQUEST_METHOD"]=="POST")
-{
+$firstName = trim($_POST["first_name"] ?? "");
+$lastName = trim($_POST["last_name"] ?? "");
+$username = trim($_POST["username"] ?? "");
+$email = trim($_POST["email"] ?? "");
+$phone = trim($_POST["phone"] ?? "");
+$address = trim($_POST["address"] ?? "");
+$district = trim($_POST["district"] ?? "");
+$password = $_POST["password"] ?? "";
+$confirmPassword = $_POST["confirm_password"] ?? "";
 
-    if($user->usernameExists($_POST["username"]))
-    {
-        die("Username already exists.");
-    }
+$errors = [];
 
-    if($user->emailExists($_POST["email"]))
-    {
-        die("Email already exists.");
-    }
+if ($firstName === "") {
+    $errors[] = "First name is required.";
+}
 
-    $data = [
-        "first_name" => $_POST["first_name"],
-        "last_name" => $_POST["last_name"],
-        "username" => $_POST["username"],
-        "email" => $_POST["email"],
-        "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
-        "phone" => $_POST["phone"],
-        "address" => $_POST["address"],
-        "district" => $_POST["district"]
+if ($lastName === "") {
+    $errors[] = "Last name is required.";
+}
 
+if ($username === "") {
+    $errors[] = "Username is required.";
+} elseif (!preg_match("/^[A-Za-z0-9_]{4,30}$/", $username)) {
+    $errors[] = "Username must contain 4 to 30 letters, numbers, or underscores.";
+}
+
+if ($email === "") {
+    $errors[] = "Email address is required.";
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Enter a valid email address.";
+}
+
+if ($phone === "") {
+    $errors[] = "Contact number is required.";
+} elseif (!preg_match("/^[0-9+\-\s]{9,20}$/", $phone)) {
+    $errors[] = "Enter a valid contact number.";
+}
+
+if ($address === "") {
+    $errors[] = "Address is required.";
+}
+
+if ($district === "") {
+    $errors[] = "Please select your district.";
+}
+
+if ($password === "") {
+    $errors[] = "Password is required.";
+} elseif (strlen($password) < 8) {
+    $errors[] = "Password must contain at least 8 characters.";
+}
+
+if ($confirmPassword === "") {
+    $errors[] = "Please confirm your password.";
+} elseif ($password !== $confirmPassword) {
+    $errors[] = "Passwords do not match.";
+}
+
+$userModel = new User();
+
+if ($username !== "" && $userModel->usernameExists($username)) {
+    $errors[] = "This username is already in use.";
+}
+
+if ($email !== "" && $userModel->emailExists($email)) {
+    $errors[] = "This email address is already registered.";
+}
+
+if (!empty($errors)) {
+    $_SESSION["register_errors"] = $errors;
+
+    $_SESSION["register_old"] = [
+        "first_name" => $firstName,
+        "last_name" => $lastName,
+        "username" => $username,
+        "email" => $email,
+        "phone" => $phone,
+        "address" => $address,
+        "district" => $district
     ];
 
-    if($user->register($data))
-    {
-        header("Location: ../views/auth/login.php?registered=1");
+    header("Location: ../views/auth/register.php");
+    exit();
+}
+
+$userData = [
+    "first_name" => $firstName,
+    "last_name" => $lastName,
+    "username" => $username,
+    "email" => $email,
+    "password" => password_hash($password, PASSWORD_DEFAULT),
+    "phone" => $phone,
+    "address" => $address,
+    "district" => $district
+];
+
+try {
+    if ($userModel->register($userData)) {
+        unset($_SESSION["register_old"]);
+        unset($_SESSION["register_errors"]);
+
+        $_SESSION["login_success"] =
+            "Registration successful. You can now sign in.";
+
+        header("Location: ../views/auth/login.php");
+        exit();
     }
 
-    else
-    {
-        echo "Registration Failed.";
-    }
+    $_SESSION["register_errors"] = [
+        "Registration could not be completed. Please try again."
+    ];
+} catch (PDOException $exception) {
+    $_SESSION["register_errors"] = [
+        "A database error occurred while creating your account."
+    ];
 }
-?>
+
+header("Location: ../views/auth/register.php");
+exit();
