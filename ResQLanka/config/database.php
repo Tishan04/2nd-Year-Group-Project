@@ -1,25 +1,38 @@
 <?php
 
-$host = "localhost";
-$dbname = "resqlanka";
-$username = "root";
-$password = "";
+class Database
+{
+    private $host = "localhost";
+    private $dbname = "resq_lanka";
+    private $username = "root";
+    private $password = "";
 
-try {
+    public $conn;
 
-    $conn = new PDO(
-        "mysql:host=$host;dbname=$dbname",
-        $username,
-        $password
-    );
+    public function connect()
+    {
+        $this->conn = null;
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try
+        {
+            $this->conn = new PDO(
+                "mysql:host=".$this->host.";dbname=".$this->dbname,
+                $this->username,
+                $this->password
+            );
 
+            $this->conn->setAttribute(
+                PDO::ATTR_ERRMODE,
+                PDO::ERRMODE_EXCEPTION
+            );
+
+        }
+        catch(PDOException $e)
+        {
+            die("Database Connection Failed : " . $e->getMessage());
+        }
+
+        return $this->conn;
+    }
 }
-catch(PDOException $e){
-
-    die("Connection Failed : ".$e->getMessage());
-
-}
-
 ?>
