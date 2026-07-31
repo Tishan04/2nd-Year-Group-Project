@@ -8,7 +8,7 @@ $old = $_SESSION["register_old"] ?? [];
 unset($_SESSION["register_errors"]);
 unset($_SESSION["register_old"]);
 
-function oldValue(string $field, array $old): string
+function oldRegisterValue($field, $old)
 {
     return htmlspecialchars(
         $old[$field] ?? "",
@@ -17,33 +17,12 @@ function oldValue(string $field, array $old): string
     );
 }
 
-$districts = [
-    "Ampara",
-    "Anuradhapura",
-    "Badulla",
-    "Batticaloa",
-    "Colombo",
-    "Galle",
-    "Gampaha",
-    "Hambantota",
-    "Jaffna",
-    "Kalutara",
-    "Kandy",
-    "Kegalle",
-    "Kilinochchi",
-    "Kurunegala",
-    "Mannar",
-    "Matale",
-    "Matara",
-    "Monaragala",
-    "Mullaitivu",
-    "Nuwara Eliya",
-    "Polonnaruwa",
-    "Puttalam",
-    "Ratnapura",
-    "Trincomalee",
-    "Vavuniya"
-];
+function registerSelected($field, $value, $old)
+{
+    return (($old[$field] ?? "") === $value)
+        ? "selected"
+        : "";
+}
 
 ?>
 
@@ -58,7 +37,7 @@ $districts = [
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Register | ResQ Lanka</title>
+    <title>ResQ Lanka - Register</title>
 
     <link
         rel="stylesheet"
@@ -88,24 +67,22 @@ $districts = [
 
             <img
                 src="../../images/logo.png"
-                alt="ResQ Lanka logo"
+                alt="logo"
             >
 
             <div>
                 <h1>ResQ Lanka</h1>
-
-                <p>
-                    Disaster &amp; Crisis Management System
-                </p>
+                <p>Disaster &amp; Crisis Management System</p>
             </div>
 
         </div>
 
         <div class="header-buttons">
 
-            <a
-                href="../fuel/search.php"
+            <button
+                type="button"
                 class="fuel"
+                onclick="window.location.href='../fuel/search.php'"
             >
                 <i class="fa-solid fa-gas-pump"></i>
 
@@ -113,11 +90,12 @@ $districts = [
                     <span>CHECK FUEL</span>
                     <span>AVAILABILITY</span>
                 </div>
-            </a>
+            </button>
 
-            <a
-                href="../disaster/report_disaster.php"
+            <button
+                type="button"
                 class="danger"
+                onclick="window.location.href='../disaster/report_disaster.php'"
             >
                 <i class="fa-solid fa-triangle-exclamation"></i>
 
@@ -125,7 +103,7 @@ $districts = [
                     <span>INFORM ABOUT</span>
                     <span>DISASTER!</span>
                 </div>
-            </a>
+            </button>
 
         </div>
 
@@ -133,26 +111,24 @@ $districts = [
 
     <main>
 
-        <!-- REGISTRATION FORM -->
         <section class="register-card">
 
             <div class="welcome-icon">
                 <i class="fa-solid fa-user-plus"></i>
             </div>
 
-            <h2>CREATE YOUR ACCOUNT</h2>
-
-            <p class="register-description">
-                Join ResQ Lanka and take part in volunteer
-                assignments across the country.
-            </p>
+            <h2>
+                CREATE YOUR
+                <br>
+                RESQ LANKA ACCOUNT
+            </h2>
 
             <div class="divider"></div>
 
             <form
+                id="registerForm"
                 action="../../controllers/RegisterController.php"
                 method="POST"
-                autocomplete="off"
             >
 
                 <?php if (!empty($registerErrors)): ?>
@@ -179,27 +155,26 @@ $districts = [
 
                 <div class="form-grid">
 
-                    <!-- First Name -->
-                    <div class="form-group">
+                    <div class="field full">
 
-                        <label for="first_name">
-                            First Name
+                        <label for="full_name">
+                            Full Name
                         </label>
 
                         <div class="input-box">
 
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
 
                             <input
                                 type="text"
-                                id="first_name"
-                                name="first_name"
-                                placeholder="Enter your first name"
-                                value="<?= oldValue(
-                                    "first_name",
+                                id="full_name"
+                                name="full_name"
+                                placeholder="Enter your full name"
+                                value="<?= oldRegisterValue(
+                                    "full_name",
                                     $old
                                 ) ?>"
-                                maxlength="50"
+                                maxlength="100"
                                 required
                             >
 
@@ -207,27 +182,25 @@ $districts = [
 
                     </div>
 
-                    <!-- Last Name -->
-                    <div class="form-group">
+                    <div class="field">
 
-                        <label for="last_name">
-                            Last Name
+                        <label for="date_of_birth">
+                            Date of Birth
                         </label>
 
                         <div class="input-box">
 
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-solid fa-calendar-days"></i>
 
                             <input
-                                type="text"
-                                id="last_name"
-                                name="last_name"
-                                placeholder="Enter your last name"
-                                value="<?= oldValue(
-                                    "last_name",
+                                type="date"
+                                id="date_of_birth"
+                                name="date_of_birth"
+                                value="<?= oldRegisterValue(
+                                    "date_of_birth",
                                     $old
                                 ) ?>"
-                                maxlength="50"
+                                max="<?= date("Y-m-d") ?>"
                                 required
                             >
 
@@ -235,39 +208,53 @@ $districts = [
 
                     </div>
 
-                    <!-- Username -->
-                    <div class="form-group">
+                    <div class="field">
 
-                        <label for="username">
-                            Username
+                        <label for="gender">
+                            Gender
                         </label>
 
                         <div class="input-box">
 
-                            <i class="fa-solid fa-at"></i>
+                            <i class="fa-solid fa-venus-mars"></i>
 
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                placeholder="Choose a username"
-                                value="<?= oldValue(
-                                    "username",
-                                    $old
-                                ) ?>"
-                                minlength="4"
-                                maxlength="30"
-                                pattern="[A-Za-z0-9_]+"
-                                title="Use only letters, numbers and underscores"
+                            <select
+                                id="gender"
+                                name="gender"
                                 required
                             >
+                                <option value="">
+                                    Select Gender
+                                </option>
+
+                                <option
+                                    value="Male"
+                                    <?= registerSelected(
+                                        "gender",
+                                        "Male",
+                                        $old
+                                    ) ?>
+                                >
+                                    Male
+                                </option>
+
+                                <option
+                                    value="Female"
+                                    <?= registerSelected(
+                                        "gender",
+                                        "Female",
+                                        $old
+                                    ) ?>
+                                >
+                                    Female
+                                </option>
+                            </select>
 
                         </div>
 
                     </div>
 
-                    <!-- Email -->
-                    <div class="form-group">
+                    <div class="field">
 
                         <label for="email">
                             Email Address
@@ -281,8 +268,8 @@ $districts = [
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Enter your email address"
-                                value="<?= oldValue(
+                                placeholder="example@email.com"
+                                value="<?= oldRegisterValue(
                                     "email",
                                     $old
                                 ) ?>"
@@ -294,8 +281,7 @@ $districts = [
 
                     </div>
 
-                    <!-- Phone -->
-                    <div class="form-group">
+                    <div class="field">
 
                         <label for="phone">
                             Contact Number
@@ -309,8 +295,8 @@ $districts = [
                                 type="tel"
                                 id="phone"
                                 name="phone"
-                                placeholder="Example: 0771234567"
-                                value="<?= oldValue(
+                                placeholder="+94 77 1234567"
+                                value="<?= oldRegisterValue(
                                     "phone",
                                     $old
                                 ) ?>"
@@ -322,14 +308,39 @@ $districts = [
 
                     </div>
 
-                    <!-- District -->
-                    <div class="form-group">
+                    <div class="field full">
+
+                        <label for="address">
+                            Home Address
+                        </label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                placeholder="Enter your home address"
+                                value="<?= oldRegisterValue(
+                                    "address",
+                                    $old
+                                ) ?>"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="field">
 
                         <label for="district">
                             District
                         </label>
 
-                        <div class="input-box select-box">
+                        <div class="input-box">
 
                             <i class="fa-solid fa-map-location-dot"></i>
 
@@ -338,72 +349,169 @@ $districts = [
                                 name="district"
                                 required
                             >
-
                                 <option value="">
-                                    Select your district
+                                    Select District
                                 </option>
 
-                                <?php foreach ($districts as $district): ?>
+                                <option
+                                    value="Colombo"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Colombo",
+                                        $old
+                                    ) ?>
+                                >
+                                    Colombo
+                                </option>
 
-                                    <option
-                                        value="<?= htmlspecialchars(
-                                            $district,
-                                            ENT_QUOTES,
-                                            "UTF-8"
-                                        ) ?>"
-                                        <?= (
-                                            ($old["district"] ?? "")
-                                            === $district
-                                        ) ? "selected" : "" ?>
-                                    >
-                                        <?= htmlspecialchars(
-                                            $district,
-                                            ENT_QUOTES,
-                                            "UTF-8"
-                                        ) ?>
-                                    </option>
+                                <option
+                                    value="Gampaha"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Gampaha",
+                                        $old
+                                    ) ?>
+                                >
+                                    Gampaha
+                                </option>
 
-                                <?php endforeach; ?>
+                                <option
+                                    value="Kalutara"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Kalutara",
+                                        $old
+                                    ) ?>
+                                >
+                                    Kalutara
+                                </option>
 
+                                <option
+                                    value="Kandy"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Kandy",
+                                        $old
+                                    ) ?>
+                                >
+                                    Kandy
+                                </option>
+
+                                <option
+                                    value="Galle"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Galle",
+                                        $old
+                                    ) ?>
+                                >
+                                    Galle
+                                </option>
+
+                                <option
+                                    value="Matara"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Matara",
+                                        $old
+                                    ) ?>
+                                >
+                                    Matara
+                                </option>
+
+                                <option
+                                    value="Kurunegala"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Kurunegala",
+                                        $old
+                                    ) ?>
+                                >
+                                    Kurunegala
+                                </option>
+
+                                <option
+                                    value="Anuradhapura"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Anuradhapura",
+                                        $old
+                                    ) ?>
+                                >
+                                    Anuradhapura
+                                </option>
+
+                                <option
+                                    value="Jaffna"
+                                    <?= registerSelected(
+                                        "district",
+                                        "Jaffna",
+                                        $old
+                                    ) ?>
+                                >
+                                    Jaffna
+                                </option>
                             </select>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="field">
 
-                <!-- Address -->
-                <div class="form-group full-width">
+                        <label for="occupation">
+                            Occupation
+                        </label>
 
-                    <label for="address">
-                        Residential Address
-                    </label>
+                        <div class="input-box">
 
-                    <div class="input-box">
+                            <i class="fa-solid fa-briefcase"></i>
 
-                        <i class="fa-solid fa-location-dot"></i>
+                            <input
+                                type="text"
+                                id="occupation"
+                                name="occupation"
+                                placeholder="Student / Engineer / Teacher"
+                                value="<?= oldRegisterValue(
+                                    "occupation",
+                                    $old
+                                ) ?>"
+                                maxlength="100"
+                                required
+                            >
 
-                        <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            placeholder="Enter your residential address"
-                            value="<?= oldValue(
-                                "address",
-                                $old
-                            ) ?>"
-                            required
-                        >
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="field full">
 
-                <div class="form-grid">
+                        <label for="nic">
+                            NIC Number
+                        </label>
 
-                    <!-- Password -->
-                    <div class="form-group">
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                id="nic"
+                                name="nic"
+                                placeholder="Enter NIC Number"
+                                value="<?= oldRegisterValue(
+                                    "nic",
+                                    $old
+                                ) ?>"
+                                maxlength="12"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="field">
 
                         <label for="password">
                             Password
@@ -417,26 +525,21 @@ $districts = [
                                 type="password"
                                 id="password"
                                 name="password"
-                                placeholder="Create a password"
+                                placeholder="Create password"
                                 minlength="8"
                                 required
                             >
 
-                            <button
-                                type="button"
-                                class="password-toggle"
+                            <i
+                                class="fa-regular fa-eye toggle-password"
                                 data-target="password"
-                                aria-label="Show or hide password"
-                            >
-                                <i class="fa-regular fa-eye"></i>
-                            </button>
+                            ></i>
 
                         </div>
 
                     </div>
 
-                    <!-- Confirm Password -->
-                    <div class="form-group">
+                    <div class="field">
 
                         <label for="confirm_password">
                             Confirm Password
@@ -450,19 +553,69 @@ $districts = [
                                 type="password"
                                 id="confirm_password"
                                 name="confirm_password"
-                                placeholder="Confirm your password"
+                                placeholder="Confirm password"
                                 minlength="8"
                                 required
                             >
 
-                            <button
-                                type="button"
-                                class="password-toggle"
+                            <i
+                                class="fa-regular fa-eye toggle-password"
                                 data-target="confirm_password"
-                                aria-label="Show or hide password"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="emergency_contact_name">
+                            Emergency Contact Name
+                        </label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            <input
+                                type="text"
+                                id="emergency_contact_name"
+                                name="emergency_contact_name"
+                                placeholder="Emergency Contact"
+                                value="<?= oldRegisterValue(
+                                    "emergency_contact_name",
+                                    $old
+                                ) ?>"
+                                maxlength="100"
+                                required
                             >
-                                <i class="fa-regular fa-eye"></i>
-                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="emergency_contact_phone">
+                            Emergency Contact Number
+                        </label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-phone-volume"></i>
+
+                            <input
+                                type="tel"
+                                id="emergency_contact_phone"
+                                name="emergency_contact_phone"
+                                placeholder="+94 71 1234567"
+                                value="<?= oldRegisterValue(
+                                    "emergency_contact_phone",
+                                    $old
+                                ) ?>"
+                                maxlength="20"
+                                required
+                            >
 
                         </div>
 
@@ -470,121 +623,103 @@ $districts = [
 
                 </div>
 
-                <p class="password-note">
-                    Your password must contain at least 8 characters.
-                </p>
-
-                <div class="terms-box">
+                <div class="terms">
 
                     <input
                         type="checkbox"
                         id="terms"
                         name="terms"
                         value="1"
+                        <?= ($old["terms"] ?? "") === "1"
+                            ? "checked"
+                            : "" ?>
                         required
                     >
 
                     <label for="terms">
-                        I confirm that the information provided is
-                        accurate and I agree to the terms and conditions.
+                        I agree to the
+                        <a href="#">Terms &amp; Conditions</a>
+                        and
+                        <a href="#">Privacy Policy</a>
                     </label>
 
                 </div>
 
                 <button
                     type="submit"
-                    class="register-submit"
+                    class="register-btn-main"
                 >
                     <i class="fa-solid fa-user-plus"></i>
                     CREATE ACCOUNT
                 </button>
 
+                <p class="login-link">
+                    Already have an account?
+                    <a href="login.php">Sign In</a>
+                </p>
+
             </form>
-
-            <div class="login-box">
-
-                <p>Already have an account?</p>
-
-                <a
-                    href="login.php"
-                    class="login-btn"
-                >
-                    SIGN IN
-                </a>
-
-            </div>
 
         </section>
 
-        <!-- RIGHT INFORMATION PANEL -->
-        <section class="information-card">
+        <section class="assignment-card">
 
             <h2>WHY JOIN RESQ LANKA?</h2>
 
-            <div class="benefit">
+            <div class="assignment">
 
-                <div class="benefit-icon blue-bg">
+                <div class="number blue">1</div>
+
+                <div class="icon blue-bg">
                     <i class="fa-solid fa-hand-holding-heart"></i>
                 </div>
 
-                <div>
-                    <h3>Support Communities</h3>
+                <div class="content">
+
+                    <h3>
+                        VOLUNTEER DURING
+                        <br>
+                        EMERGENCIES
+                    </h3>
 
                     <p>
-                        Take part in disaster response,
-                        recovery and community assistance.
+                        <i class="fa-solid fa-circle-check"></i>
+                        Participate in rescue and disaster relief missions.
                     </p>
+
+                </div>
+
+                <div class="status">
+                    OPEN
                 </div>
 
             </div>
 
-            <div class="benefit">
+            <div class="assignment">
 
-                <div class="benefit-icon red-bg">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="number red">2</div>
+
+                <div class="icon red-bg">
+                    <i class="fa-solid fa-box-open"></i>
                 </div>
 
-                <div>
-                    <h3>Respond to Emergencies</h3>
+                <div class="content">
+
+                    <h3>
+                        DONATE RELIEF
+                        <br>
+                        SUPPLIES
+                    </h3>
 
                     <p>
-                        Receive information about active disaster
-                        assignments and volunteer opportunities.
+                        <i class="fa-solid fa-circle-check"></i>
+                        Help communities with food, medicine and essentials.
                     </p>
+
                 </div>
 
-            </div>
-
-            <div class="benefit">
-
-                <div class="benefit-icon green-bg">
-                    <i class="fa-solid fa-ranking-star"></i>
-                </div>
-
-                <div>
-                    <h3>Build Your Volunteer Ranking</h3>
-
-                    <p>
-                        Earn assignment points, progress through
-                        volunteer tiers and gain experience.
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="benefit">
-
-                <div class="benefit-icon purple-bg">
-                    <i class="fa-solid fa-certificate"></i>
-                </div>
-
-                <div>
-                    <h3>Receive Certificates</h3>
-
-                    <p>
-                        Eligible volunteers can receive electronic
-                        certificates after completing assignments.
-                    </p>
+                <div class="status">
+                    ACTIVE
                 </div>
 
             </div>
@@ -592,16 +727,18 @@ $districts = [
             <div class="info-box">
 
                 <div class="shield">
-                    <i class="fa-solid fa-shield-halved"></i>
+                    <i class="fa-solid fa-shield"></i>
                 </div>
 
                 <div>
-                    <h3>Your information is protected.</h3>
+
+                    <h3>Together We Save Lives</h3>
 
                     <p>
-                        Your account details will only be used
-                        for ResQ Lanka services and assignments.
+                        Register today and become a trusted member
+                        of Sri Lanka's disaster response network.
                     </p>
+
                 </div>
 
             </div>
@@ -615,10 +752,8 @@ $districts = [
         <div>
             <i class="fa-solid fa-shield"></i>
 
-            <span>
-                Building safer communities through preparedness,
-                response and resilience.
-            </span>
+            Building safer communities through preparedness,
+            response and resilience.
         </div>
 
         <div>
@@ -629,28 +764,7 @@ $districts = [
 
 </div>
 
-<script>
-    const passwordButtons =
-        document.querySelectorAll(".password-toggle");
-
-    passwordButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const targetId = button.dataset.target;
-            const input = document.getElementById(targetId);
-            const icon = button.querySelector("i");
-
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            }
-        });
-    });
-</script>
+<script src="../../js/register.js"></script>
 
 </body>
 </html>
