@@ -15,9 +15,7 @@ function oldRegisterValue($field, $old)
 
 function registerSelected($field, $value, $old)
 {
-    return (($old[$field] ?? "") === $value)
-        ? "selected"
-        : "";
+    return (($old[$field] ?? "") === $value) ? "selected" : "";
 }
 
 ?>
