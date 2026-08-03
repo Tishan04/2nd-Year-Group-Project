@@ -10,11 +10,7 @@ unset($_SESSION["register_old"]);
 
 function oldRegisterValue($field, $old)
 {
-    return htmlspecialchars(
-        $old[$field] ?? "",
-        ENT_QUOTES,
-        "UTF-8"
-    );
+    return htmlspecialchars($old[$field] ?? "", ENT_QUOTES, "UTF-8");
 }
 
 function registerSelected($field, $value, $old)
