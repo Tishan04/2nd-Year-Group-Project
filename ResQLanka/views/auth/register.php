@@ -204,14 +204,7 @@ function registerSelected($field, $value, $old)
 
                             <i class="fa-solid fa-phone"></i>
 
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                placeholder="+94 77 1234567"
-                                value="<?= oldRegisterValue(
-                                    "phone",
-                                    $old
+                            <input type="tel" id="phone" name="phone" placeholder="+94 77 1234567" value="<?= oldRegisterValue("phone", $old
                                 ) ?>"
                                 maxlength="20"
                                 required
