@@ -510,51 +510,30 @@ function registerSelected($field, $value, $old)
 
                             <i class="fa-solid fa-phone-volume"></i>
 
-                            <input
-                                type="tel"
-                                id="emergency_contact_phone"
-                                name="emergency_contact_phone"
-                                placeholder="+94 71 1234567"
-                                value="<?= oldRegisterValue(
-                                    "emergency_contact_phone",
-                                    $old
+                            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" placeholder="+94 71 1234567" value="<?= oldRegisterValue( "emergency_contact_phone", $old
                                 ) ?>"
                                 maxlength="20"
                                 required
                             >
 
                         </div>
-
                     </div>
 
                 </div>
 
                 <div class="terms">
 
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        name="terms"
-                        value="1"
-                        <?= ($old["terms"] ?? "") === "1"
-                            ? "checked"
-                            : "" ?>
-                        required
-                    >
-
+                    <input type="checkbox" id="terms" name="terms" value="1" <?= ($old["terms"] ?? "") === "1" ? "checked" : "" ?> required>
                     <label for="terms">
-                        I agree to the
-                        <a href="#">Terms &amp; Conditions</a>
-                        and
-                        <a href="#">Privacy Policy</a>
+                        I agree to the <a href="#"> Terms &amp; Conditions </a> and <a href="#"> Privacy Policy </a>
                     </label>
-
                 </div>
 
                 <button type="submit" class="register-btn-main">
                     <i class="fa-solid fa-user-plus"></i>
                     CREATE ACCOUNT
                 </button>
+                
                 <p class="login-link">
                     Already have an account?
                     <a href="login.php">Sign In</a>
