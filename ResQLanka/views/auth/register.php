@@ -30,10 +30,7 @@ function registerSelected($field, $value, $old)
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="../../css/registerstyles.css"
-    >
+    <link rel="stylesheet" href="../../css/registerstyles.css">
 </head>
 
 <body>
@@ -41,15 +38,11 @@ function registerSelected($field, $value, $old)
 <div class="background"></div>
 
 <div class="container">
-
     <header>
 
         <div class="logo-area">
 
-            <img
-                src="../../images/logo.png"
-                alt="logo"
-            >
+            <img src="../../images/logo.png" alt="logo">
 
             <div>
                 <h1>ResQ Lanka</h1>
@@ -57,27 +50,17 @@ function registerSelected($field, $value, $old)
             </div>
 
         </div>
-
         <div class="header-buttons">
 
-            <button
-                type="button"
-                class="fuel"
-                onclick="window.location.href='../fuel/search.php'"
-            >
-                <i class="fa-solid fa-gas-pump"></i>
-
+            <button type="button" class="fuel" onclick="window.location.href='../fuel/search.php'">
+            <i class="fa-solid fa-gas-pump"></i>
                 <div>
                     <span>CHECK FUEL</span>
                     <span>AVAILABILITY</span>
                 </div>
             </button>
 
-            <button
-                type="button"
-                class="danger"
-                onclick="window.location.href='../disaster/report_disaster.php'"
-            >
+            <button type="button" class="danger" onclick="window.location.href='../disaster/report_disaster.php'">
                 <i class="fa-solid fa-triangle-exclamation"></i>
 
                 <div>
@@ -85,7 +68,6 @@ function registerSelected($field, $value, $old)
                     <span>DISASTER!</span>
                 </div>
             </button>
-
         </div>
 
     </header>
@@ -93,7 +75,6 @@ function registerSelected($field, $value, $old)
     <main>
 
         <section class="register-card">
-
             <div class="welcome-icon">
                 <i class="fa-solid fa-user-plus"></i>
             </div>
@@ -106,30 +87,19 @@ function registerSelected($field, $value, $old)
 
             <div class="divider"></div>
 
-            <form
-                id="registerForm"
-                action="../../controllers/RegisterController.php"
-                method="POST"
-            >
+            <form id="registerForm" action="../../controllers/RegisterController.php" method="POST">
 
                 <?php if (!empty($registerErrors)): ?>
 
                     <div class="form-errors">
-
                         <?php foreach ($registerErrors as $error): ?>
 
                             <p>
                                 <i class="fa-solid fa-circle-exclamation"></i>
-
-                                <?= htmlspecialchars(
-                                    $error,
-                                    ENT_QUOTES,
-                                    "UTF-8"
-                                ) ?>
+                                <?= htmlspecialchars($error, ENT_QUOTES, "UTF-8") ?>
                             </p>
 
                         <?php endforeach; ?>
-
                     </div>
 
                 <?php endif; ?>
@@ -137,75 +107,37 @@ function registerSelected($field, $value, $old)
                 <div class="form-grid">
 
                     <div class="field full">
-
                         <label for="full_name">
                             Full Name
                         </label>
 
                         <div class="input-box">
-
                             <i class="fa-solid fa-user"></i>
-
-                            <input
-                                type="text"
-                                id="full_name"
-                                name="full_name"
-                                placeholder="Enter your full name"
-                                value="<?= oldRegisterValue(
-                                    "full_name",
-                                    $old
-                                ) ?>"
-                                maxlength="100"
-                                required
-                            >
-
+                            <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" value="<?= oldRegisterValue("full_name",$old) ?>" maxlength="100" required>
                         </div>
-
                     </div>
 
                     <div class="field">
-
                         <label for="date_of_birth">
                             Date of Birth
                         </label>
 
                         <div class="input-box">
-
                             <i class="fa-solid fa-calendar-days"></i>
-
-                            <input
-                                type="date"
-                                id="date_of_birth"
-                                name="date_of_birth"
-                                value="<?= oldRegisterValue(
-                                    "date_of_birth",
-                                    $old
-                                ) ?>"
-                                max="<?= date("Y-m-d") ?>"
-                                required
-                            >
-
+                            <input type="date" id="date_of_birth" name="date_of_birth" value="<?= oldRegisterValue("date_of_birth",$old) ?>" max="<?= date("Y-m-d") ?>"required>
                         </div>
-
                     </div>
 
                     <div class="field">
-
                         <label for="gender">
                             Gender
                         </label>
 
                         <div class="input-box">
-
                             <i class="fa-solid fa-venus-mars"></i>
 
-                            <select
-                                id="gender"
-                                name="gender"
-                                required
-                            >
-                                <option value="">
-                                    Select Gender
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender
                                 </option>
 
                                 <option
