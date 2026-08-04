@@ -551,19 +551,14 @@ function registerSelected($field, $value, $old)
 
                 </div>
 
-                <button
-                    type="submit"
-                    class="register-btn-main"
-                >
+                <button type="submit" class="register-btn-main">
                     <i class="fa-solid fa-user-plus"></i>
                     CREATE ACCOUNT
                 </button>
-
                 <p class="login-link">
                     Already have an account?
                     <a href="login.php">Sign In</a>
                 </p>
-
             </form>
 
         </section>
@@ -573,61 +568,48 @@ function registerSelected($field, $value, $old)
             <h2>WHY JOIN RESQ LANKA?</h2>
 
             <div class="assignment">
-
                 <div class="number blue">1</div>
-
                 <div class="icon blue-bg">
                     <i class="fa-solid fa-hand-holding-heart"></i>
                 </div>
 
                 <div class="content">
-
                     <h3>
                         VOLUNTEER DURING
                         <br>
                         EMERGENCIES
                     </h3>
-
                     <p>
                         <i class="fa-solid fa-circle-check"></i>
                         Participate in rescue and disaster relief missions.
                     </p>
-
                 </div>
-
                 <div class="status">
                     OPEN
                 </div>
-
             </div>
 
             <div class="assignment">
-
                 <div class="number red">2</div>
-
                 <div class="icon red-bg">
                     <i class="fa-solid fa-box-open"></i>
                 </div>
 
                 <div class="content">
-
                     <h3>
                         DONATE RELIEF
                         <br>
                         SUPPLIES
                     </h3>
-
                     <p>
                         <i class="fa-solid fa-circle-check"></i>
                         Help communities with food, medicine and essentials.
                     </p>
-
                 </div>
 
                 <div class="status">
                     ACTIVE
                 </div>
-
             </div>
 
             <div class="info-box">
@@ -637,16 +619,12 @@ function registerSelected($field, $value, $old)
                 </div>
 
                 <div>
-
                     <h3>Together We Save Lives</h3>
-
                     <p>
                         Register today and become a trusted member
                         of Sri Lanka's disaster response network.
                     </p>
-
                 </div>
-
             </div>
 
         </section>
@@ -657,11 +635,9 @@ function registerSelected($field, $value, $old)
 
         <div>
             <i class="fa-solid fa-shield"></i>
-
             Building safer communities through preparedness,
             response and resilience.
         </div>
-
         <div>
             © 2026 ResQ Lanka. All rights reserved.
         </div>
