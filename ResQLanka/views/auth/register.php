@@ -221,25 +221,11 @@ function registerSelected($field, $value, $old)
                                     Gampaha
                                 </option>
 
-                                <option
-                                    value="Kalutara"
-                                    <?= registerSelected(
-                                        "district",
-                                        "Kalutara",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Kalutara" <?= registerSelected("district", "Kalutara", $old) ?>>
                                     Kalutara
                                 </option>
 
-                                <option
-                                    value="Kandy"
-                                    <?= registerSelected(
-                                        "district",
-                                        "Kandy",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Kandy" <?= registerSelected("district", "Kandy", $old) ?>>
                                     Kandy
                                 </option>
 
