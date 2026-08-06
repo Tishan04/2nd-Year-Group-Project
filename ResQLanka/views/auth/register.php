@@ -223,18 +223,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-location-dot"></i>
-
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                placeholder="Enter your home address"
-                                value="<?= oldRegisterValue(
-                                    "address",
-                                    $old
-                                ) ?>"
-                                required
-                            >
+                            <input type="text" id="address" name="address" placeholder="Enter your home address" value="<?= oldRegisterValue("address", $old) ?>" required>
 
                         </div>
 
@@ -250,8 +239,7 @@ function registerSelected($field, $value, $old)
 
                             <i class="fa-solid fa-map-location-dot"></i>
 
-                            <select
-                                id="district"
+                            <select id="district"
                                 name="district"
                                 required
                             >
