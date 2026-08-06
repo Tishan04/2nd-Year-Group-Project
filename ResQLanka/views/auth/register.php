@@ -213,28 +213,16 @@ function registerSelected($field, $value, $old)
 
                             <i class="fa-solid fa-map-location-dot"></i>
 
-                            <select id="district"
-                                name="district"
-                                required
-                            >
+                            <select id="district" name="district" required>
                                 <option value="">
                                     Select District
                                 </option>
 
-                                <option
-                                    value="Colombo"
-                                    <?= registerSelected(
-                                        "district",
-                                        "Colombo",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Colombo" <?= registerSelected("district", "Colombo", $old) ?>>
                                     Colombo
                                 </option>
 
-                                <option
-                                    value="Gampaha"
-                                    <?= registerSelected(
+                                <option value="Gampaha" <?= registerSelected(
                                         "district",
                                         "Gampaha",
                                         $old
