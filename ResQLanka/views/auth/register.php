@@ -196,8 +196,8 @@ function registerSelected($field, $value, $old)
 
                         <div class="input-box">
 
-                            <i class="fa-solid fa-location-dot"></i>
-                            <input type="text" id="address" name="address" placeholder="Enter your home address" value="<?= oldRegisterValue("address", $old) ?>" required>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="address" name="address" placeholder="Enter your home address" value="<?= oldRegisterValue("address", $old) ?>" required>
 
                         </div>
 
@@ -222,12 +222,7 @@ function registerSelected($field, $value, $old)
                                     Colombo
                                 </option>
 
-                                <option value="Gampaha" <?= registerSelected(
-                                        "district",
-                                        "Gampaha",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Gampaha" <?= registerSelected("district", "Gampaha", $old) ?>>
                                     Gampaha
                                 </option>
 
