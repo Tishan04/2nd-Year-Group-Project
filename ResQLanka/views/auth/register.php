@@ -162,19 +162,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-regular fa-envelope"></i>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="example@email.com"
-                                value="<?= oldRegisterValue(
-                                    "email",
-                                    $old
-                                ) ?>"
-                                maxlength="100"
-                                required
-                            >
+                            <input type="email" id="email" name="email" placeholder="example@email.com" value="<?= oldRegisterValue("email", $old) ?>" maxlength="100" required>
 
                         </div>
 
