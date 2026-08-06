@@ -140,22 +140,11 @@ function registerSelected($field, $value, $old)
                                 <option value="">Select Gender
                                 </option>
 
-                                <option
-                                    value="Male"
-                                    <?= registerSelected(
-                                        "gender",
-                                        "Male",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Male" <?= registerSelected("gender", "Male", $old) ?>>
                                     Male
                                 </option>
 
-                                <option value="Female" <?= registerSelected("gender",
-                                        "Female",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Female" <?= registerSelected("gender", "Female", $old) ?>>
                                     Female
                                 </option>
                             </select>
