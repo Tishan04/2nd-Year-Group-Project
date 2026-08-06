@@ -313,15 +313,8 @@ function registerSelected($field, $value, $old)
 
                             <i class="fa-solid fa-briefcase"></i>
 
-                            <input
-                                type="text"
-                                id="occupation"
-                                name="occupation"
-                                placeholder="Student / Engineer / Teacher"
-                                value="<?= oldRegisterValue(
-                                    "occupation",
-                                    $old
-                                ) ?>"
+                            <input type="text" id="occupation" name="occupation" placeholder="Student / Engineer / Teacher"
+                                value="<?= oldRegisterValue("occupation", $old) ?>"
                                 maxlength="100"
                                 required
                             >
