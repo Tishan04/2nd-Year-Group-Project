@@ -266,14 +266,7 @@ function registerSelected($field, $value, $old)
                                     Anuradhapura
                                 </option>
 
-                                <option
-                                    value="Jaffna"
-                                    <?= registerSelected(
-                                        "district",
-                                        "Jaffna",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Jaffna" <?= registerSelected("district", "Jaffna", $old)?>>
                                     Jaffna
                                 </option>
                             </select>
