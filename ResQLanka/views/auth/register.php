@@ -233,14 +233,7 @@ function registerSelected($field, $value, $old)
                                     Galle
                                 </option>
 
-                                <option
-                                    value="Matara"
-                                    <?= registerSelected(
-                                        "district",
-                                        "Matara",
-                                        $old
-                                    ) ?>
-                                >
+                                <option value="Matara"<?= registerSelected("district", "Matara", $old) ?>>
                                     Matara
                                 </option>
 
