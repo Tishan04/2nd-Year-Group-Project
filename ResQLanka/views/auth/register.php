@@ -291,12 +291,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-briefcase"></i>
-
-                            <input type="text" id="occupation" name="occupation" placeholder="Student / Engineer / Teacher"
-                                value="<?= oldRegisterValue("occupation", $old) ?>"
-                                maxlength="100"
-                                required
-                            >
+                            <input type="text" id="occupation" name="occupation" placeholder="Student / Engineer / Teacher" value="<?= oldRegisterValue("occupation", $old) ?>" maxlength="100" required>
 
                         </div>
 
@@ -311,19 +306,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-regular fa-id-card"></i>
-
-                            <input
-                                type="text"
-                                id="nic"
-                                name="nic"
-                                placeholder="Enter NIC Number"
-                                value="<?= oldRegisterValue(
-                                    "nic",
-                                    $old
-                                ) ?>"
-                                maxlength="12"
-                                required
-                            >
+                            <input type="text" id="nic" name="nic" placeholder="Enter NIC Number" value="<?= oldRegisterValue("nic", $old) ?>" maxlength="12" required>
 
                         </div>
 
@@ -338,20 +321,8 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-lock"></i>
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Create password"
-                                minlength="8"
-                                required
-                            >
-
-                            <i
-                                class="fa-regular fa-eye toggle-password"
-                                data-target="password"
-                            ></i>
+                            <input type="password" id="password" name="password" placeholder="Create password" minlength="8" required>
+                            <i class="fa-regular fa-eye toggle-password" data-target="password"></i>
 
                         </div>
 
@@ -366,20 +337,8 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-lock"></i>
-
-                            <input
-                                type="password"
-                                id="confirm_password"
-                                name="confirm_password"
-                                placeholder="Confirm password"
-                                minlength="8"
-                                required
-                            >
-
-                            <i
-                                class="fa-regular fa-eye toggle-password"
-                                data-target="confirm_password"
-                            ></i>
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" minlength="8" required>
+                            <i class="fa-regular fa-eye toggle-password" data-target="confirm_password"></i>
 
                         </div>
 
@@ -394,19 +353,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-user-shield"></i>
-
-                            <input
-                                type="text"
-                                id="emergency_contact_name"
-                                name="emergency_contact_name"
-                                placeholder="Emergency Contact"
-                                value="<?= oldRegisterValue(
-                                    "emergency_contact_name",
-                                    $old
-                                ) ?>"
-                                maxlength="100"
-                                required
-                            >
+                            <input type="text" id="emergency_contact_name" name="emergency_contact_name" placeholder="Emergency Contact" value="<?= oldRegisterValue("emergency_contact_name", $old) ?>" maxlength="100" required>
 
                         </div>
 
@@ -421,12 +368,7 @@ function registerSelected($field, $value, $old)
                         <div class="input-box">
 
                             <i class="fa-solid fa-phone-volume"></i>
-
-                            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" placeholder="+94 71 1234567" value="<?= oldRegisterValue( "emergency_contact_phone", $old
-                                ) ?>"
-                                maxlength="20"
-                                required
-                            >
+                            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" placeholder="+94 71 1234567" value="<?= oldRegisterValue("emergency_contact_phone", $old) ?>" maxlength="20" required>
 
                         </div>
                     </div>
