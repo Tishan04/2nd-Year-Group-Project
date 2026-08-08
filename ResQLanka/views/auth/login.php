@@ -126,11 +126,7 @@ require_once("../../config/session.php");
                 </div>
 
                 <div class="content">
-                    <h3>
-                        BEACH CLEAN-UP
-                        <br>
-                        IN MOUNT LAVINIA
-                    </h3>
+                    <h3> BEACH CLEAN-UP <br> IN MOUNT LAVINIA </h3>
                     <p>
                         <i class="fa-regular fa-calendar"></i>
 
