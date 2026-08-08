@@ -422,7 +422,7 @@ function registerSelected($field, $value, $old)
                 <div class="shield">
                     <i class="fa-solid fa-shield"></i>
                 </div>
-
+                
                 <div>
                     <h3>Together We Save Lives</h3>
                     <p>
