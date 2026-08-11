@@ -5,7 +5,7 @@ require_once("../../config/session.php");
 <html lang="en">
 
 <head>
-    <meta charset="UTF-7">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ResQ Lanka Login</title>
 
