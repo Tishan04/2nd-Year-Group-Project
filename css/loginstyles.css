@@ -73,10 +73,7 @@ header {
     margin-top:5px;
 }
 
-/*==========================
-    HEADER BUTTONS
-===========================*/
-
+/*HEADER BUTTONS*/
 .header-buttons {
     display:flex;
     gap:20px;
