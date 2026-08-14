@@ -31,22 +31,11 @@ body{
     height:220px;
     background:
     linear-gradient(120deg,#2d63ff,#153db8);
-    clip-path:polygon(
-        0 35%,
-        20% 0,
-        45% 30%,
-        70% 5%,
-        100% 40%,
-        100% 100%,
-        0 100%
-    );
+    clip-path:polygon(0 35%, 20% 0, 45% 30%, 70% 5%, 100% 40%, 100% 100%, 0 100%);
     opacity:.15;
 }
 
-/*==========================
-    CONTAINER
-===========================*/
-
+/*CONTAINER*/
 .container {
     width:92%;
     max-width:1500px;
@@ -54,10 +43,7 @@ body{
     padding:30px 0;
 }
 
-/*==========================
-    HEADER
-===========================*/
-
+/*HEADER*/
 header {
     display:flex;
     justify-content:space-between;
