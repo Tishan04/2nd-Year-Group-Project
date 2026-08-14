@@ -22,7 +22,6 @@ body{
 }
 
 /* Decorative blue area */
-
 .background::after {
     content:"";
     position:absolute;
