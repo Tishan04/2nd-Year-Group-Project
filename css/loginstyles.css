@@ -249,10 +249,7 @@ form label {
     cursor:pointer;
 }
 
-/*=================================
-    SIGN IN BUTTON
-==================================*/
-
+/*SIGN IN BUTTON*/
 .signin {
     width:100%;
     height:45px;
@@ -292,10 +289,7 @@ form label {
     text-decoration:underline;
 }
 
-/*=================================
-    REGISTER CARD
-==================================*/
-
+/*REGISTER CARD*/
 .register-box {
     margin-top:25px;
     border:2px solid #e6edfc;
@@ -357,10 +351,7 @@ form label {
     transform:translateY(-2px);
 }
 
-/*=================================
-    ASSIGNMENT CARDS
-==================================*/
-
+/*ASSIGNMENT CARDS*/
 .assignment {
     position:relative;
     display:flex;
