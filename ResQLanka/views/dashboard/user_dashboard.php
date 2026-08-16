@@ -1,9 +1,7 @@
 <?php
 
 $pageTitle = "User Dashboard | ResQ Lanka";
-
 $pageCSS = "../../css/user_dashboard.css";
-
 $activePage = "dashboard";
 
 require_once __DIR__ . "/../../config/session.php";
@@ -12,10 +10,7 @@ $fullName = $_SESSION["name"] ?? "John";
 $tier = $_SESSION["tier"] ?? "Bronze";
 $points = $_SESSION["points"] ?? 0;
 
-$firstName = explode(
-    " ",
-    trim($fullName)
-)[0];
+$firstName = explode(" ", trim($fullName))[0];
 
 function escapeValue($value)
 {
@@ -39,14 +34,9 @@ include __DIR__ . "/../layouts/sidebar.php";
 
 <main class="dashboard-content">
 
-    <!-- =========================
-         WELCOME SECTION
-    ========================== -->
-
+    <!-- WELCOME SECTION -->
     <section class="welcome-card">
-
         <div class="welcome-content">
-
             <div class="welcome-title">
 
                 <span class="welcome-label">
