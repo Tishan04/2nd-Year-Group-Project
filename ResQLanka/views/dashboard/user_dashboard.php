@@ -72,22 +72,15 @@ include __DIR__ . "/../layouts/sidebar.php";
                     </strong>
 
                 </div>
-
             </div>
-
         </div>
 
     </section>
 
 
-    <!-- =========================
-         STATISTICS
-    ========================== -->
-
+    <!-- STATISTICS -->
     <section class="stats-grid">
-
         <article class="stat-card stat-blue">
-
             <div class="stat-top">
 
                 <div class="stat-icon">
