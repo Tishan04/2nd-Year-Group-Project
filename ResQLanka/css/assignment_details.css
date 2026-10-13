@@ -1,26 +1,16 @@
 
 .main-content {
     flex: 1;
-
     margin-left: 12px;
-
     background: white;
-
     border-radius: 8px;
-
     padding: 18px 18px 25px;
-
-    box-shadow:
-        0 1px 5px rgba(0, 0, 0, 0.16);
-
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
     overflow: hidden;
 }
 
-
-
 .page-heading {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
