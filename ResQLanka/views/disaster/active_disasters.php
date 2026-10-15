@@ -35,13 +35,13 @@ function getDisasterCover($type)
     return $covers[$type] ?? $covers['Other'];
 }
 
-function getSeverityClass($priority)
+function getPriorityClass($priority)
 {
     $class = [
-        'Critical' => ['severity_class' => 'critical'],
-        'Moderate' => ['severity_class' => 'moderate'],
-        'Minor'    => ['severity_class' => 'minor'],
-        'Other'    => ['severity_class' => 'default'] 
+        'High' => ['priority_class' => 'high'],
+        'Medium' => ['priority_class' => 'medium'],
+        'Low'    => ['priority_class' => 'low'],
+        'Other'    => ['priority_class' => 'default'] 
     ];
     
     
@@ -82,34 +82,33 @@ $db = new Database();
 $conn = $db->connect();
 
 $selectedDistrict = $_GET['district'] ?? 'All';
-$selectedSeverity = $_GET['severity'] ?? 'All';
+$selectedPriority = $_GET['priority'] ?? 'All';
 $searchQuery = trim($_GET['search'] ?? '');
 
 $sql = "
-    SELECT a.*, d.title AS disaster_title, d.disaster_type, d.district
-    FROM volunteer_assignment a
-    JOIN disaster d ON a.disaster_id = d.disaster_id
-    WHERE a.status = 'Ongoing'
+    SELECT *
+    FROM disaster 
+    WHERE status = 'Ongoing'
 ";
 $params = [];
 
 if ($selectedDistrict !== 'All') {
-    $sql .= " AND d.district = ?";
+    $sql .= " AND district = ?";
     $params[] = $selectedDistrict;
 }
 
-if ($selectedSeverity !== 'All') {
-    $sql .= " AND a.severity = ?";
-    $params[] = $selectedSeverity;
+if ($selectedPriority !== 'All') {
+    $sql .= " AND priority = ?";
+    $params[] = $selectedPriority;
 }
 
 if ($searchQuery !== '') {
-    $sql .= " AND (d.title LIKE ? OR d.description LIKE ? OR a.title LIKE ?)";
+    $sql .= " AND (title LIKE ? OR description LIKE ?)";
     $term = "%" . $searchQuery . "%";
     array_push($params, $term, $term, $term);
 }
 
-$sql .= " ORDER BY a.created_at DESC";
+$sql .= " ORDER BY created_at DESC";
 
 $disasterStmt = $conn->prepare($sql);
 $disasterStmt->execute($params);
@@ -138,7 +137,7 @@ include __DIR__ . "/../layouts/sidebar.php";
             <?php
                 $criticalCount = 0;
                 foreach ($disasters as $disaster) {
-                    if (($disaster['severity'] ?? '') === 'Critical') {
+                    if (($disaster['priority'] ?? '') === 'High') {
                         $criticalCount++;
                     }
                 }
@@ -155,7 +154,7 @@ include __DIR__ . "/../layouts/sidebar.php";
              <?php
                 $moderateCount = 0;
                 foreach ($disasters as $disaster) {
-                    if (($disaster['severity'] ?? '') === 'Moderate') {
+                    if (($disaster['priority'] ?? '') === 'Medium') {
                         $moderateCount++;
                     }
                 }
@@ -172,7 +171,7 @@ include __DIR__ . "/../layouts/sidebar.php";
              <?php
                 $minorCount = 0;
                 foreach ($disasters as $disaster) {
-                    if (($disaster['severity'] ?? '') === 'Minor') {
+                    if (($disaster['priority'] ?? '') === 'Low') {
                         $minorCount++;
                     }
                 }
@@ -205,15 +204,12 @@ include __DIR__ . "/../layouts/sidebar.php";
                 </div>
                 <div class="tab-select">
                     
-                        <select name="severity" onchange="this.form.submit()" class="custom-select">
-                            <option value="All" <?= $selectedSeverity === 'All' ? 'selected' : '' ?>>All Severity</option>
-                            <option value="Critical" <?= $selectedSeverity === 'Critical' ? 'selected' : '' ?>>Critical</option>
-                             <option value="Moderate" <?= $selectedSeverity === 'Moderate' ? 'selected' : '' ?>>Moderate</option>
-                              <option value="Minor" <?= $selectedSeverity === 'Minor' ? 'selected' : '' ?>>Minor</option>
-                        </select>
-
-                    
-                    
+                    <select name="priority" onchange="this.form.submit()" class="custom-select">
+                        <option value="All" <?= $selectedPriority === 'All' ? 'selected' : '' ?>>All Priority</option>
+                        <option value="High" <?= $selectedPriority === 'High' ? 'selected' : '' ?>>High</option>
+                        <option value="Medium" <?= $selectedPriority === 'Medium' ? 'selected' : '' ?>>Medium</option>
+                        <option value="Low" <?= $selectedPriority === 'Low' ? 'selected' : '' ?>>Low</option>
+                    </select>
                 </div>
                 <div class="tab-select">
                     
@@ -256,30 +252,30 @@ include __DIR__ . "/../layouts/sidebar.php";
 
         <div class="assignment-layout">
 
-            <section class="assignment-list">
+            <section class="disaster-list">
                 <?php foreach ($disasters as $disaster): 
-                    $severity = getSeverityClass($disaster['severity'] ?? 'Other');
+                    $priority = getPriorityClass($disaster['priority'] ?? 'Other');
                     $coverData = getDisasterCover($disaster['disaster_type'] ?? 'Other');
                     $image = $coverData['image'];?>
                    
-                    <article class="assignment-card disaster-card border-<?= escape($severity['severity_class']) ?>">
+                    <article class="assignment-card disaster-card border-<?= escape($priority['priority_class']) ?>">
                 
                         <img src="<?= escape($image) ?>" alt="Disaster Area" class="disaster-img">
 
                         <div class="disaster-info-main">
                             <div class="disaster-top-row">
-                                <span class="status-badge badge-<?= escape($severity['severity_class']) ?>">
-                                    <?= escape($disaster['severity']) ?>
+                                <span class="status-badge badge-<?= escape($priority['priority_class']) ?>">
+                                    <?= escape($disaster['priority']) ?>
                                 </span>
                                 <a 
-                                    href="apply_assignment.php?assignment_id=<?= escape($disaster['assignment_id'])?>"
-                                    class="view-details btn-<?= escape($severity['severity_class']) ?>"
+                                    href="view_assignments.php?disaster_id=<?= escape($disaster['disaster_id'])?>"
+                                    class="view-details btn-<?= escape($priority['priority_class']) ?>"
                                 >
                                     View Details <i class="fa-solid fa-caret-down"></i>
                                 </a>
                             </div>
                             
-                            <h3 class="disaster-title"><?= escape($disaster['disaster_title']) ?></h3>
+                            <h3 class="disaster-title"><?= escape($disaster['title']) ?></h3>
                             
                             <div class="disaster-location">
                                 <i class="fa-solid fa-location-dot"></i> <?= escape($disaster['location']) ?>
@@ -289,7 +285,7 @@ include __DIR__ . "/../layouts/sidebar.php";
                             
                             <div class="disaster-meta-footer">
                                 <span><i class="fa-regular fa-clock"></i> <?= escape(timeAgo($disaster['created_at'])) ?></span>
-                                <span><i class="fa-solid fa-users"></i> <?= escape($disaster['volunteers_needed']) ?> volunteers requested</span>
+                    
                             </div>
                         </div>
 
