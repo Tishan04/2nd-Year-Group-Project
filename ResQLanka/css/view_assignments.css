@@ -1,0 +1,366 @@
+/* Core Layout */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Breadcrumbs */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #2860df;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.breadcrumb a {
+    color: #8a96a9;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #102d72;
+}
+
+.breadcrumb i {
+    font-size: 10px;
+}
+
+/* Header Section */
+.detail-heading {
+    background: #fff;
+    border: 1px solid #e3ebfb;
+    border-radius: 20px;
+    padding: 25px 30px;
+    box-shadow: 0 12px 35px rgba(16,44,113,.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2860df;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.detail-heading h2 {
+    color: #102d72;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+
+.detail-heading p {
+    margin: 0;
+    color: #6a7894;
+    font-size: 14px;
+}
+
+.severity-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.High { background: #ffebe5; color: #d62020; }
+.Medium { background: #fff8e5; color: #e68a00; }
+.Low{ background: #e5f8ed; color: #12843f; }
+
+
+/* Main Grid Layout */
+.details-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 17px;
+    margin-top: 13px;
+}
+
+
+.assignment-details-card {
+    background: #fff;
+    border: 1px solid #e3ebfb;
+    border-radius: 20px;
+    padding: 25px 30px;
+    box-shadow: 0 12px 35px rgba(16,44,113,.04);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.disaster-card {
+    display: flex;
+    align-items: stretch;
+    padding: 12px;
+    border: 1px solid #d9dfe8;
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: 0 3px 5px rgba(20,40,80,.04);
+    transition: .2s ease;
+}
+
+.disaster-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(20,40,80,.10);
+}
+
+.border-critical { border-left: 4px solid #d62020; }
+.border-moderate { border-left: 4px solid #e68a00; }
+.border-minor    { border-left: 4px solid #12843f; }
+
+.disaster-img {
+    width: 130px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 7px;
+    flex-shrink: 0;
+    background: #eee;
+}
+
+.disaster-info-main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.disaster-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.status-badge {
+    padding: 3px 7px;
+    border-radius: 12px;
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.badge-critical { background: #ffebe5; color: #d62020; }
+.badge-moderate { background: #fff8e5; color: #e68a00; }
+.badge-minor    { background: #e5f8ed; color: #12843f; }
+
+.view-details {
+    min-width: 86px;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 1px solid;
+    border-radius: 11px;
+    background: #fff;
+    font-size: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.btn-critical { border-color: #d62020; color: #d62020; }
+.btn-critical:hover { background: #d62020; color: #fff; }
+
+.btn-moderate { border-color: #e68a00; color: #e68a00; }
+.btn-moderate:hover { background: #e68a00; color: #fff; }
+
+.btn-minor { border-color: #12843f; color: #12843f; }
+.btn-minor:hover { background: #12843f; color: #fff; }
+
+.disaster-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 3px;
+}
+
+.disaster-location {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.disaster-location i { color: #111; }
+
+.disaster-desc {
+    font-size: 9px;
+    color: #777;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.disaster-meta-footer {
+    display: flex;
+    gap: 20px;
+    font-size: 9px;
+    color: #555;
+    margin-top: auto;
+}
+
+.disaster-meta-footer i { color: #111; }
+
+
+
+
+/* Community Strip */
+.community-strip {
+    width: 100%;
+
+    margin-top: 20px;
+
+    min-height: 91px;
+
+    padding: 15px 23px;
+
+    border-radius: 22px;
+
+    background: #fff;
+
+    border: 1px solid #e5ecf9;
+
+    box-shadow:
+        0 10px 26px rgba(16,44,113,.06);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.community-message {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.community-main-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #1e58dd;
+
+    color: #fff;
+
+    font-size: 19px;
+}
+
+.community-message h3 {
+    margin: 0;
+
+    color: #173b8e;
+
+    font-size: 14px;
+}
+
+.community-message p {
+    margin: 3px 0 0;
+
+    color: #8490a5;
+
+    font-size: 9px;
+}
+
+.community-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+    flex-shrink: 0;
+}
+
+.community-item {
+    min-width: 75px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+    color: #1951cb;
+}
+
+.community-item i {
+    font-size: 20px;
+}
+
+.community-item span {
+    color: #6b7891;
+
+    font-size: 9px;
+
+    font-weight: 500;
+}
+
+.community-divider {
+    width: 1px;
+
+    height: 38px;
+
+    background: #e2e8f2;
+}
+
+@media (max-width: 1100px) {
+    
+    .application-card {
+        position: static;
+    }
+}
+
+@media (max-width: 850px) {
+    
+    .community-strip {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .detail-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .community-actions {
+        width: 100%;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+}
