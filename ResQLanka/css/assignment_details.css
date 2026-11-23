@@ -1,50 +1,91 @@
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
 .main-content {
     flex: 1;
+
     margin-left: 12px;
+
     background: white;
+
     border-radius: 8px;
+
     padding: 18px 18px 25px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
+
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, 0.16);
+
     overflow: hidden;
 }
 
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
 .page-heading {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 15px;
+
     padding: 0 4px;
 }
 
+
 .breadcrumb {
     display: flex;
+
     align-items: center;
+
     gap: 9px;
+
     color: #777;
+
     font-size: 11px;
+
     margin-bottom: 5px;
 }
 
+
 .breadcrumb i {
     font-size: 9px;
+
     color: #8a8a8a;
 }
+
 
 .breadcrumb strong {
     color: #777;
 }
 
+
 .page-heading h2 {
     font-size: 25px;
+
     line-height: 1.15;
+
     color: #111;
+
     margin-bottom: 4px;
 }
 
+
 .page-heading p {
     font-size: 11px;
+
     color: #666;
 }
+
+
+
+/* =========================================================
+   CREATE BUTTON
+========================================================= */
 
 .create-button {
     display: inline-flex;
@@ -67,6 +108,7 @@
     padding: 0 15px;
 
     font-size: 11px;
+
     font-weight: 600;
 
     box-shadow:
@@ -82,6 +124,11 @@
     transform: translateY(-1px);
 }
 
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
 
 .message {
     min-height: 42px;
@@ -120,6 +167,11 @@
 }
 
 
+
+/* =========================================================
+   ASSIGNMENT CARD
+========================================================= */
+
 .assignment-card {
     width: 100%;
 
@@ -133,6 +185,11 @@
 }
 
 
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
 .card-header {
     min-height: 65px;
 
@@ -141,6 +198,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     background: #f8fafc;
@@ -190,6 +248,11 @@
     font-size: 12px;
 }
 
+
+
+/* =========================================================
+   TABLE
+========================================================= */
 
 .table-wrapper {
     width: 100%;
@@ -254,41 +317,51 @@
 }
 
 
+
+/* =========================================================
+   COLUMN WIDTHS
+========================================================= */
+
 .assignment-table th:nth-child(1),
 .assignment-table td:nth-child(1) {
-    width: 27%;
+    width: 25%;
 }
 
 
 .assignment-table th:nth-child(2),
 .assignment-table td:nth-child(2) {
-    width: 16%;
+    width: 15%;
 }
 
 
 .assignment-table th:nth-child(3),
 .assignment-table td:nth-child(3) {
-    width: 15%;
+    width: 14%;
 }
 
 
 .assignment-table th:nth-child(4),
 .assignment-table td:nth-child(4) {
-    width: 12%;
+    width: 11%;
 }
 
 
 .assignment-table th:nth-child(5),
 .assignment-table td:nth-child(5) {
-    width: 10%;
+    width: 9%;
 }
 
 
 .assignment-table th:nth-child(6),
 .assignment-table td:nth-child(6) {
-    width: 20%;
+    width: 26%;
 }
 
+
+
+/* =========================================================
+   ASSIGNMENT TITLE
+========================================================= */
 
 .assignment-title {
     display: flex;
@@ -301,6 +374,7 @@
 
 .assignment-icon {
     width: 29px;
+
     height: 29px;
 
     flex-shrink: 0;
@@ -314,6 +388,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     font-size: 13px;
@@ -354,6 +429,11 @@
 }
 
 
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
 .location-cell {
     display: flex;
 
@@ -379,6 +459,11 @@
 }
 
 
+
+/* =========================================================
+   VOLUNTEER NUMBER
+========================================================= */
+
 .volunteer-number {
     display: flex;
 
@@ -399,6 +484,11 @@
     font-size: 11px;
 }
 
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
 
 .status-badge {
     display: inline-flex;
@@ -451,6 +541,11 @@
 }
 
 
+
+/* =========================================================
+   PRIORITY
+========================================================= */
+
 .priority-badge {
     display: inline-block;
 
@@ -494,12 +589,19 @@
 }
 
 
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
 .action-buttons {
     display: flex;
 
     align-items: center;
 
-    gap: 5px;
+    gap: 4px;
+
+    flex-wrap: wrap;
 }
 
 
@@ -510,7 +612,7 @@
 
     height: 27px;
 
-    padding: 0 8px;
+    padding: 0 7px;
 
     border-radius: 4px;
 
@@ -523,6 +625,7 @@
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 4px;
@@ -530,6 +633,11 @@
     transition: 0.15s ease;
 }
 
+
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
 
 .view-button {
     color: #0b48d9;
@@ -544,6 +652,30 @@
     background: #dce8ff;
 }
 
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-button {
+    color: #7040c9;
+
+    background: #f1eaff;
+
+    border: 1px solid #b99ae9 !important;
+}
+
+
+.edit-button:hover {
+    background: #e4d7ff;
+}
+
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
 
 .delete-button {
     color: #d21c1c;
@@ -565,6 +697,10 @@
 
 
 
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
 .empty-state {
     height: 280px;
 
@@ -578,6 +714,7 @@
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     height: 100%;
@@ -634,6 +771,11 @@
 }
 
 
+
+/* =========================================================
+   GENERAL MODAL
+========================================================= */
+
 .modal-overlay {
     position: fixed;
 
@@ -644,6 +786,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
@@ -664,6 +807,11 @@
     visibility: visible;
 }
 
+
+
+/* =========================================================
+   VIEW DETAILS MODAL
+========================================================= */
 
 .details-modal {
     width: min(720px, 95vw);
@@ -690,12 +838,18 @@
 }
 
 
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
 .modal-header {
     padding: 18px 20px;
 
     display: flex;
 
     justify-content: space-between;
+
     align-items: flex-start;
 
     background: #e4ecff;
@@ -726,6 +880,7 @@
 
 .modal-close {
     width: 30px;
+
     height: 30px;
 
     border: none;
@@ -741,6 +896,16 @@
     font-size: 14px;
 }
 
+
+.modal-close:hover {
+    background: #f1f1f1;
+}
+
+
+
+/* =========================================================
+   DETAILS MODAL BODY
+========================================================= */
 
 .modal-body {
     padding: 20px;
@@ -801,19 +966,299 @@
 }
 
 
+
+/* =========================================================
+   EDIT MODAL
+========================================================= */
+
+.edit-modal {
+    width: min(450px, 95vw);
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.25);
+
+    transform: translateY(15px);
+
+    transition: 0.2s ease;
+
+    overflow: hidden;
+}
+
+
+.modal-overlay.show .edit-modal {
+    transform: translateY(0);
+}
+
+
+.edit-modal-header {
+    background: #eee7ff;
+
+    border-bottom: 1px solid #d8c9f5;
+}
+
+
+.edit-modal-header span {
+    color: #7040c9;
+}
+
+
+
+/* =========================================================
+   EDIT MODAL BODY
+========================================================= */
+
+.edit-modal-body {
+    padding: 20px;
+}
+
+
+
+/* =========================================================
+   ASSIGNMENT INFORMATION
+========================================================= */
+
+.edit-assignment-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    background: #f7f9fc;
+
+    border: 1px solid #e5e9f0;
+
+    border-radius: 8px;
+}
+
+
+.edit-assignment-info > i {
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8ddff;
+
+    color: #7040c9;
+
+    font-size: 15px;
+}
+
+
+.edit-assignment-info span {
+    display: block;
+
+    color: #777;
+
+    font-size: 9px;
+
+    margin-bottom: 3px;
+}
+
+
+.edit-assignment-info strong {
+    display: block;
+
+    color: #222;
+
+    font-size: 11px;
+}
+
+
+
+/* =========================================================
+   EDIT FORM
+========================================================= */
+
+.edit-form-group {
+    margin-bottom: 20px;
+}
+
+
+.edit-form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #222;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+.number-input-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.number-input-wrapper i {
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #3159c8;
+
+    font-size: 13px;
+}
+
+
+.number-input-wrapper input {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 0 12px 0 35px;
+
+    border: 1px solid #ccd3df;
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 11px;
+
+    color: #222;
+
+    box-sizing: border-box;
+}
+
+
+.number-input-wrapper input:focus {
+    border-color: #3159c8;
+
+    box-shadow:
+        0 0 0 2px rgba(49, 89, 200, 0.10);
+}
+
+
+.edit-form-group small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #888;
+
+    font-size: 8px;
+}
+
+
+
+/* =========================================================
+   EDIT MODAL ACTIONS
+========================================================= */
+
+.edit-modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding-top: 5px;
+}
+
+
+.cancel-edit-button,
+.update-button {
+    height: 34px;
+
+    padding: 0 13px;
+
+    border-radius: 5px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+}
+
+
+.cancel-edit-button {
+    background: #f1f1f1;
+
+    color: #555;
+
+    border: 1px solid #d4d4d4;
+}
+
+
+.cancel-edit-button:hover {
+    background: #e5e5e5;
+}
+
+
+.update-button {
+    background: #0d2fc8;
+
+    color: white;
+
+    border: 1px solid #0d2fc8;
+}
+
+
+.update-button:hover {
+    background: #0824a9;
+}
+
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media (max-width: 1100px) {
 
     .header-actions {
         gap: 8px;
     }
 
+
     .quick-action {
         min-width: 150px;
     }
 
+
     .sidebar {
         width: 190px;
     }
+
 
     .action-buttons {
         flex-direction: column;
@@ -824,6 +1269,7 @@
 }
 
 
+
 @media (max-width: 850px) {
 
     .top-header {
@@ -831,6 +1277,7 @@
 
         padding: 10px;
     }
+
 
     .header-inner {
         height: auto;
@@ -842,11 +1289,13 @@
         gap: 12px;
     }
 
+
     .app-layout {
         padding: 0 10px 15px;
 
         flex-direction: column;
     }
+
 
     .sidebar {
         width: 100%;
@@ -856,23 +1305,28 @@
         margin-bottom: 10px;
     }
 
+
     .sidebar-nav {
         flex-direction: row;
 
         overflow-x: auto;
     }
 
+
     .nav-item {
         min-width: 160px;
     }
+
 
     .logout-button {
         margin-top: 15px;
     }
 
+
     .main-content {
         margin-left: 0;
     }
+
 
     .page-heading {
         flex-direction: column;
@@ -885,11 +1339,13 @@
 }
 
 
+
 @media (max-width: 600px) {
 
     .brand-text h1 {
         font-size: 28px;
     }
+
 
     .header-actions {
         flex-wrap: wrap;
@@ -897,20 +1353,29 @@
         justify-content: center;
     }
 
+
     .quick-action {
         min-width: 145px;
     }
 
+
     .assignment-table {
-        min-width: 850px;
+        min-width: 900px;
     }
+
 
     .detail-grid {
         grid-template-columns: 1fr;
     }
 
+
     .detail-item.full-width {
         grid-column: auto;
+    }
+
+
+    .edit-modal {
+        width: 95vw;
     }
 
 }

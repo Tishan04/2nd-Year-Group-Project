@@ -7,6 +7,11 @@ require_once "../../config/database.php";
 $database = new Database();
 $conn = $database->connect();
 
+
+/* =========================================================
+   ESCAPE FUNCTION
+========================================================= */
+
 function escape($value)
 {
     return htmlspecialchars(
@@ -16,10 +21,131 @@ function escape($value)
     );
 }
 
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
 $successMessage = "";
 $errorMessage = "";
 
 
+/* =========================================================
+   UPDATE VOLUNTEER NUMBER
+========================================================= */
+
+if (
+    $_SERVER["REQUEST_METHOD"] === "POST" &&
+    isset($_POST["update_volunteers"])
+) {
+
+    $assignmentId = $_POST["assignment_id"] ?? "";
+    $volunteersNeeded = $_POST["volunteers_needed"] ?? "";
+
+
+    /* -----------------------------------------
+       VALIDATE ASSIGNMENT ID
+    ----------------------------------------- */
+
+    if (empty($assignmentId)) {
+
+        $errorMessage = "Invalid assignment ID.";
+
+    }
+
+
+    /* -----------------------------------------
+       VALIDATE NUMBER OF VOLUNTEERS
+    ----------------------------------------- */
+
+    elseif (
+        $volunteersNeeded === "" ||
+        !ctype_digit((string)$volunteersNeeded) ||
+        (int)$volunteersNeeded < 0
+    ) {
+
+        $errorMessage =
+            "Please enter a valid number of volunteers.";
+
+    }
+
+
+    /* -----------------------------------------
+       UPDATE DATABASE
+    ----------------------------------------- */
+
+    else {
+
+        try {
+
+            $updateSql = "
+                UPDATE VOLUNTEER_ASSIGNMENT
+                SET volunteers_needed = :volunteers_needed
+                WHERE assignment_id = :assignment_id
+            ";
+
+            $updateStmt = $conn->prepare($updateSql);
+
+            $updateStmt->execute([
+                ":volunteers_needed" => (int)$volunteersNeeded,
+                ":assignment_id" => (int)$assignmentId
+            ]);
+
+
+            if ($updateStmt->rowCount() > 0) {
+
+                $successMessage =
+                    "Number of volunteers updated successfully.";
+
+            } else {
+
+                /*
+                 * rowCount() can be 0 when the user enters
+                 * the same value that is already stored.
+                 */
+                $checkSql = "
+                    SELECT assignment_id
+                    FROM VOLUNTEER_ASSIGNMENT
+                    WHERE assignment_id = :assignment_id
+                ";
+
+                $checkStmt = $conn->prepare($checkSql);
+
+                $checkStmt->execute([
+                    ":assignment_id" => (int)$assignmentId
+                ]);
+
+                if ($checkStmt->fetch()) {
+
+                    $successMessage =
+                        "Volunteer number is already set to "
+                        . (int)$volunteersNeeded
+                        . ".";
+
+                } else {
+
+                    $errorMessage =
+                        "Assignment was not found.";
+
+                }
+
+            }
+
+        } catch (PDOException $e) {
+
+            $errorMessage =
+                "Unable to update volunteer number: "
+                . $e->getMessage();
+
+        }
+
+    }
+}
+
+
+/* =========================================================
+   DELETE ASSIGNMENT
+========================================================= */
 
 if (
     $_SERVER["REQUEST_METHOD"] === "POST" &&
@@ -27,6 +153,7 @@ if (
 ) {
 
     $assignmentId = $_POST["assignment_id"] ?? "";
+
 
     if (!empty($assignmentId)) {
 
@@ -40,8 +167,9 @@ if (
             $deleteStmt = $conn->prepare($deleteSql);
 
             $deleteStmt->execute([
-                ":assignment_id" => $assignmentId
+                ":assignment_id" => (int)$assignmentId
             ]);
+
 
             if ($deleteStmt->rowCount() > 0) {
 
@@ -65,17 +193,23 @@ if (
 
     } else {
 
-        $errorMessage = "Invalid assignment ID.";
+        $errorMessage =
+            "Invalid assignment ID.";
 
     }
 }
 
 
+/* =========================================================
+   GET ALL VOLUNTEER ASSIGNMENTS
+========================================================= */
 
 $assignments = [];
 
 $sql = "
+
     SELECT
+
         va.assignment_id,
         va.disaster_id,
         va.title,
@@ -96,6 +230,7 @@ $sql = "
         d.disaster_type,
 
         CASE
+
             WHEN CURDATE() < va.start_date
                 THEN 'Upcoming'
 
@@ -103,6 +238,7 @@ $sql = "
                 THEN 'Completed'
 
             ELSE 'Ongoing'
+
         END AS current_status
 
     FROM VOLUNTEER_ASSIGNMENT va
@@ -111,13 +247,16 @@ $sql = "
         ON va.disaster_id = d.disaster_id
 
     ORDER BY va.created_at DESC
+
 ";
+
 
 try {
 
     $stmt = $conn->query($sql);
 
-    $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $assignments =
+        $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
 
@@ -131,6 +270,7 @@ try {
 
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -179,23 +319,22 @@ try {
 <?php include "../layouts/header.php"; ?>
 
 
-
 <?php include "../layouts/navbar.php"; ?>
-
 
 
 <div class="app-layout">
 
 
-    
     <?php include "../layouts/district_admin_sidebar.php"; ?>
 
-  
 
     <main class="main-content">
 
 
-        
+        <!-- =====================================================
+             PAGE HEADING
+        ====================================================== -->
+
         <div class="page-heading">
 
             <div>
@@ -228,7 +367,7 @@ try {
             </div>
 
 
-            <!-- CREATE ASSIGNMENT BUTTON -->
+            <!-- CREATE ASSIGNMENT -->
 
             <a
                 href="volunteer_assignments.php"
@@ -245,7 +384,10 @@ try {
 
 
 
-        
+        <!-- =====================================================
+             SUCCESS MESSAGE
+        ====================================================== -->
+
         <?php if (!empty($successMessage)): ?>
 
             <div class="message success-message">
@@ -262,7 +404,10 @@ try {
 
 
 
-        
+        <!-- =====================================================
+             ERROR MESSAGE
+        ====================================================== -->
+
         <?php if (!empty($errorMessage)): ?>
 
             <div class="message error-message">
@@ -279,7 +424,10 @@ try {
 
 
 
-        
+        <!-- =====================================================
+             ASSIGNMENT TABLE
+        ====================================================== -->
+
         <section class="assignment-card">
 
 
@@ -314,7 +462,7 @@ try {
 
             </div>
 
-            
+
 
             <div class="table-wrapper">
 
@@ -365,7 +513,11 @@ try {
 
                             <tr>
 
-                                
+
+                                <!-- =================================================
+                                     ASSIGNMENT
+                                ================================================== -->
+
                                 <td>
 
                                     <div class="assignment-title">
@@ -387,6 +539,7 @@ try {
 
                                             </strong>
 
+
                                             <span>
 
                                                 <?= escape(
@@ -402,7 +555,11 @@ try {
                                 </td>
 
 
-                                
+
+                                <!-- =================================================
+                                     LOCATION
+                                ================================================== -->
+
                                 <td>
 
                                     <div class="location-cell">
@@ -422,7 +579,11 @@ try {
                                 </td>
 
 
-                                
+
+                                <!-- =================================================
+                                     NUMBER OF VOLUNTEERS
+                                ================================================== -->
+
                                 <td>
 
                                     <div class="volunteer-number">
@@ -442,7 +603,11 @@ try {
                                 </td>
 
 
-                                
+
+                                <!-- =================================================
+                                     STATUS
+                                ================================================== -->
+
                                 <td>
 
                                     <?php
@@ -458,7 +623,9 @@ try {
 
                                     <?php if ($status === "completed"): ?>
 
-                                        <span class="status-badge completed">
+                                        <span
+                                            class="status-badge completed"
+                                        >
 
                                             <i class="fa-solid fa-circle-check"></i>
 
@@ -469,7 +636,9 @@ try {
 
                                     <?php elseif ($status === "upcoming"): ?>
 
-                                        <span class="status-badge upcoming">
+                                        <span
+                                            class="status-badge upcoming"
+                                        >
 
                                             <i class="fa-solid fa-circle-xmark"></i>
 
@@ -480,7 +649,9 @@ try {
 
                                     <?php else: ?>
 
-                                        <span class="status-badge ongoing">
+                                        <span
+                                            class="status-badge ongoing"
+                                        >
 
                                             <i class="fa-solid fa-circle"></i>
 
@@ -493,7 +664,11 @@ try {
                                 </td>
 
 
-                               
+
+                                <!-- =================================================
+                                     PRIORITY
+                                ================================================== -->
+
                                 <td>
 
                                     <?php
@@ -509,34 +684,36 @@ try {
 
                                     <?php if ($priority === "high"): ?>
 
-                                        <span class="priority-badge high">
-
+                                        <span
+                                            class="priority-badge high"
+                                        >
                                             High
-
                                         </span>
 
 
                                     <?php elseif ($priority === "medium"): ?>
 
-                                        <span class="priority-badge medium">
-
+                                        <span
+                                            class="priority-badge medium"
+                                        >
                                             Medium
-
                                         </span>
 
 
                                     <?php elseif ($priority === "low"): ?>
 
-                                        <span class="priority-badge low">
-
+                                        <span
+                                            class="priority-badge low"
+                                        >
                                             Low
-
                                         </span>
 
 
                                     <?php else: ?>
 
-                                        <span class="priority-badge default">
+                                        <span
+                                            class="priority-badge default"
+                                        >
 
                                             <?= escape(
                                                 $assignment["severity"]
@@ -548,19 +725,24 @@ try {
 
                                 </td>
 
-                                
+
+
+                                <!-- =================================================
+                                     ACTION BUTTONS
+                                ================================================== -->
 
                                 <td>
 
                                     <div class="action-buttons">
 
 
-                                        <!-- VIEW DETAILS -->
+                                        <!-- VIEW -->
 
                                         <button
                                             type="button"
                                             class="view-button"
                                             onclick="showDetails(
+
                                                 <?= htmlspecialchars(
                                                     json_encode(
                                                         $assignment,
@@ -572,12 +754,39 @@ try {
                                                     ENT_QUOTES,
                                                     'UTF-8'
                                                 ) ?>
+
                                             )"
                                         >
 
                                             <i class="fa-regular fa-eye"></i>
 
                                             View
+
+                                        </button>
+
+
+
+                                        <!-- EDIT -->
+
+                                        <button
+                                            type="button"
+                                            class="edit-button"
+                                            onclick="openEditModal(
+
+                                                <?= (int)$assignment["assignment_id"] ?>,
+
+                                                '<?= escape(
+                                                    $assignment["title"]
+                                                ) ?>',
+
+                                                <?= (int)$assignment["volunteers_needed"] ?>
+
+                                            )"
+                                        >
+
+                                            <i class="fa-regular fa-pen-to-square"></i>
+
+                                            Edit
 
                                         </button>
 
@@ -619,6 +828,7 @@ try {
 
                                         </form>
 
+
                                     </div>
 
                                 </td>
@@ -633,7 +843,6 @@ try {
                     <?php else: ?>
 
 
-                       
                         <tr>
 
                             <td
@@ -690,7 +899,9 @@ try {
 
 
 
-
+<!-- ============================================================
+     VIEW DETAILS MODAL
+============================================================= -->
 
 <div
     id="detailsModal"
@@ -704,8 +915,6 @@ try {
         onclick="event.stopPropagation()"
     >
 
-
-        <!-- MODAL HEADER -->
 
         <div class="modal-header">
 
@@ -735,8 +944,6 @@ try {
         </div>
 
 
-
-        <!-- MODAL BODY -->
 
         <div class="modal-body">
 
@@ -910,8 +1117,184 @@ try {
 
 
 
+<!-- ============================================================
+     EDIT VOLUNTEER NUMBER MODAL
+============================================================= -->
+
+<div
+    id="editModal"
+    class="modal-overlay"
+    onclick="closeEditModal(event)"
+>
+
+
+    <div
+        class="edit-modal"
+        onclick="event.stopPropagation()"
+    >
+
+
+        <!-- EDIT HEADER -->
+
+        <div class="modal-header edit-modal-header">
+
+            <div>
+
+                <span>
+                    EDIT ASSIGNMENT
+                </span>
+
+                <h3>
+                    Update Volunteers Needed
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeEditModal()"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- EDIT BODY -->
+
+        <div class="edit-modal-body">
+
+
+            <div class="edit-assignment-info">
+
+                <i class="fa-solid fa-people-group"></i>
+
+                <div>
+
+                    <span>
+                        Volunteer Assignment
+                    </span>
+
+                    <strong id="editAssignmentTitle">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- UPDATE FORM -->
+
+            <form
+                method="POST"
+                action=""
+                class="edit-form"
+            >
+
+
+                <input
+                    type="hidden"
+                    name="assignment_id"
+                    id="editAssignmentId"
+                >
+
+
+                <input
+                    type="hidden"
+                    name="update_volunteers"
+                    value="1"
+                >
+
+
+                <div class="edit-form-group">
+
+                    <label for="volunteersNeeded">
+
+                        Number of Volunteers Needed
+
+                    </label>
+
+
+                    <div class="number-input-wrapper">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                        <input
+                            type="number"
+                            name="volunteers_needed"
+                            id="volunteersNeeded"
+                            min="0"
+                            step="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <small>
+                        Enter the new number of volunteers required
+                        for this assignment.
+                    </small>
+
+                </div>
+
+
+
+                <div class="edit-modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-edit-button"
+                        onclick="closeEditModal()"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="update-button"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Update Volunteers
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================= -->
 
 <script>
+
+
+/* =========================================================
+   VIEW DETAILS
+========================================================= */
 
 function showDetails(assignment)
 {
@@ -975,6 +1358,10 @@ function showDetails(assignment)
 
 
 
+/* =========================================================
+   CLOSE DETAILS MODAL
+========================================================= */
+
 function closeDetails(event)
 {
 
@@ -992,6 +1379,65 @@ function closeDetails(event)
 
 
 
+/* =========================================================
+   OPEN EDIT MODAL
+========================================================= */
+
+function openEditModal(
+    assignmentId,
+    assignmentTitle,
+    volunteersNeeded
+)
+{
+
+    document.getElementById("editAssignmentId").value =
+        assignmentId;
+
+
+    document.getElementById("editAssignmentTitle").textContent =
+        assignmentTitle;
+
+
+    document.getElementById("volunteersNeeded").value =
+        volunteersNeeded;
+
+
+    document.getElementById("editModal")
+        .classList.add("show");
+
+
+    document.getElementById("volunteersNeeded")
+        .focus();
+
+}
+
+
+
+/* =========================================================
+   CLOSE EDIT MODAL
+========================================================= */
+
+function closeEditModal(event)
+{
+
+    if (
+        !event ||
+        event.target.id === "editModal"
+    ) {
+
+        document.getElementById("editModal")
+            .classList.remove("show");
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
 document.addEventListener(
     "keydown",
     function(event)
@@ -1002,14 +1448,16 @@ document.addEventListener(
             document.getElementById("detailsModal")
                 .classList.remove("show");
 
+
+            document.getElementById("editModal")
+                .classList.remove("show");
+
         }
 
     }
 );
 
 </script>
-
-
 
 
 
