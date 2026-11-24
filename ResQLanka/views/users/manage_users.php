@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION["volunteer_page_message"] = $message;
     $_SESSION["volunteer_page_message_type"] = $messageType;
-    header("Location: manage_volunteers.php");
+    header("Location: " . $_SERVER["PHP_SELF"]);
     exit();
 }
 
@@ -251,7 +251,7 @@ if ($district === "") {
 
         $totalVolunteers = count($volunteers);
 
-        
+       
         $applicationsSql = "
             SELECT
                 app.application_id,
@@ -460,7 +460,7 @@ include __DIR__ . "/../layouts/navbar.php";
                                         </button>
 
                                         <?php if (!empty($volunteer["active_application_id"])): ?>
-                                            <form method="POST" class="inline-form" onsubmit="return confirm('Mark this volunteer assignment as completed?');">
+                                            <form method="POST" action="<?= escape($_SERVER["PHP_SELF"]) ?>" class="inline-form" onsubmit="return confirm('Mark this volunteer assignment as completed?');">
                                                 <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                                                 <input type="hidden" name="action" value="mark_completed">
                                                 <input type="hidden" name="application_id" value="<?= escape($volunteer["active_application_id"]) ?>">
@@ -617,7 +617,7 @@ include __DIR__ . "/../layouts/navbar.php";
             </div>
 
             <div class="review-actions" id="reviewActions">
-                <form method="POST" class="review-decision-form" onsubmit="return confirm('Approve this volunteer application?');">
+                <form method="POST" action="<?= escape($_SERVER["PHP_SELF"]) ?>" class="review-decision-form" onsubmit="return confirm('Approve this volunteer application?');">
                     <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                     <input type="hidden" name="action" value="review_application">
                     <input type="hidden" name="application_id" id="reviewApplicationId" value="">
@@ -627,7 +627,7 @@ include __DIR__ . "/../layouts/navbar.php";
                     </button>
                 </form>
 
-                <form method="POST" class="review-decision-form" onsubmit="return confirm('Decline this volunteer application?');">
+                <form method="POST" action="<?= escape($_SERVER["PHP_SELF"]) ?>" class="review-decision-form" onsubmit="return confirm('Decline this volunteer application?');">
                     <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                     <input type="hidden" name="action" value="review_application">
                     <input type="hidden" name="application_id" id="declineApplicationId" value="">
