@@ -8,6 +8,9 @@ $pageTitle = "Manage Volunteers | ResQ Lanka";
 $pageCSS = "../../css/manage_volunteers.css";
 $activePage = "volunteers";
 
+// Always submit actions and return to the real Manage Users page.
+$manageUsersUrl = "/2nd-Year-Group-Project-git/ResQLanka/views/users/manage_users.php";
+
 $district = trim($_SESSION["district"] ?? "");
 $adminId = (int)($_SESSION["user_id"] ?? 0);
 
@@ -127,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION["volunteer_page_message"] = $message;
     $_SESSION["volunteer_page_message_type"] = $messageType;
-    header("Location: " . (parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) ?: $_SERVER["PHP_SELF"]));
+    header("Location: " . $manageUsersUrl);
     exit();
 }
 
@@ -460,7 +463,7 @@ include __DIR__ . "/../layouts/navbar.php";
                                         </button>
 
                                         <?php if (!empty($volunteer["active_application_id"])): ?>
-                                            <form method="POST" action="" class="inline-form" onsubmit="return confirm('Mark this volunteer assignment as completed?');">
+                                            <form method="POST" action="<?= escape($manageUsersUrl) ?>" class="inline-form" onsubmit="return confirm('Mark this volunteer assignment as completed?');">
                                                 <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                                                 <input type="hidden" name="action" value="mark_completed">
                                                 <input type="hidden" name="application_id" value="<?= escape($volunteer["active_application_id"]) ?>">
@@ -617,7 +620,7 @@ include __DIR__ . "/../layouts/navbar.php";
             </div>
 
             <div class="review-actions" id="reviewActions">
-                <form method="POST" action="" class="review-decision-form" onsubmit="return confirm('Approve this volunteer application?');">
+                <form method="POST" action="<?= escape($manageUsersUrl) ?>" class="review-decision-form" onsubmit="return confirm('Approve this volunteer application?');">
                     <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                     <input type="hidden" name="action" value="review_application">
                     <input type="hidden" name="application_id" id="reviewApplicationId" value="">
@@ -627,7 +630,7 @@ include __DIR__ . "/../layouts/navbar.php";
                     </button>
                 </form>
 
-                <form method="POST" action="" class="review-decision-form" onsubmit="return confirm('Decline this volunteer application?');">
+                <form method="POST" action="<?= escape($manageUsersUrl) ?>" class="review-decision-form" onsubmit="return confirm('Decline this volunteer application?');">
                     <input type="hidden" name="csrf_token" value="<?= escape($csrfToken) ?>">
                     <input type="hidden" name="action" value="review_application">
                     <input type="hidden" name="application_id" id="declineApplicationId" value="">
